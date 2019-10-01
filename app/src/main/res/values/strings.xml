@@ -1,0 +1,57 @@
+<resources>
+    <string name="app_name">PopularMovies</string>
+    <string name="settings">Settings</string>
+    <string name="sign_out">Sign out</string>
+    <string name="no_internet">Please Connect to the internet and try again</string>
+    <string name="youtube">youtube Logo </string>
+    <string name="watch_Trailer">Watch Trailer</string>
+    <string name="Trailer">Trailer</string>
+    <string name="Movie_Poster">The Movie poster should be displayed here</string>
+    <string name="Released_ON">The movie was released on</string>
+    <string name="Movie_Vote">The number of votes are</string>
+    <string name="Open_Trailers">Watch the Trailers</string>
+    <string name="title_activity_trailers_view">TrailersView</string>
+    <string name="Author_name">Author name:</string>
+    <string name="author">author</string>
+    <string name="reviews">Reviews</string>
+    <string name="trailers">Trailers</string>
+    <string name="overview">Overview:</string>
+    <string name="rating">user Ratings</string>
+    <string name="movie_id">Movie ID</string>
+    <string name="sort_by_favorites">Favorites</string>
+    <string name="sort_popularity">Most Popular</string>
+    <string name="sort_top_rated">Top rated</string>
+    <string name="setting">Settings</string>
+    <string name="sort_by_pref_title">Sort By</string>
+    <string name="sort_by_key">sort_by_key</string>
+    <string name="sort_by_favorites_entry">Favorite Movies</string>
+    <string name="sort_popularity_entry">Most Popular Movies</string>
+    <string name="sort_top_rated_entry">Top rated Movies</string>
+    <string name="favorite">Favoirte</string>
+    <string name="movie">movie</string>
+    <string name="trailersList">Trailers</string>
+    <string name="ReviewsList">Reviews</string>
+    <!-- Strings related to Settings -->
+    <string-array name="sort_by_pref_entry_array">
+        <item>@string/sort_popularity_entry</item>
+        <item>@string/sort_top_rated_entry</item>
+        <item>@string/sort_by_favorites_entry</item>
+    </string-array>
+
+    <string-array name="sort_by_pref_values_array">
+        <item>@string/sort_popularity</item>
+        <item>@string/sort_top_rated</item>
+        <item>@string/sort_by_favorites</item>
+    </string-array>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_to_widget">Add widget</string>
+    <string name="user_profile">My profile</string>
+    <string name="title_activity_movie__details">Movie_Details</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.jpardogo.materialtabstrip:library:1.1.0@aar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/9c2301a78fb8f0dfe07e71a95514e9cb/jetified-library-1.1.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/9c2301a78fb8f0dfe07e71a95514e9cb/jetified-library-1.1.0/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.jpardogo.materialtabstrip/library/1.1.0/73b2505cb4283509fa365132d02dd55936350afb/library-1.1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.jpardogo.materialtabstrip/library/1.1.0/66813a171a1caa1c3e0f8a7da96c265375c68924/library-1.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

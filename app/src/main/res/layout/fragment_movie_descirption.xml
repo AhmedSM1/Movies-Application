@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detailsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragments.MovieDescirption">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/movieImage"
+        android:layout_width="140dp"
+        android:layout_height="190dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:contentDescription="@string/Movie_Poster"/>
+
+
+
+    <TextView
+        android:id="@+id/Vote"
+        android:layout_width="135dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="23dp"
+        android:layout_marginEnd="264dp"
+        android:text="@string/Movie_Vote"/>
+
+      <RatingBar
+
+          android:layout_marginStart="12dp"
+          android:layout_marginTop="23dp"
+         android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:id="@+id/ratingBar"
+          android:numStars="5"
+          android:visibility="visible"/>
+
+    <TextView
+        android:id="@+id/id_label"
+        android:layout_width="61dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/movie_id" />
+
+    <TextView
+        android:id="@+id/movie-id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:id="@+id/release"
+        android:layout_width="153dp"
+        android:layout_height="23dp"
+        android:text="@string/Released_ON" />
+
+    <TextView
+        android:id="@+id/movieReleaseDate"
+        android:layout_width="99dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="78dp"/>
+
+    <TextView
+        android:id="@+id/MovieSnippet"
+        android:layout_width="85dp"
+        android:layout_height="18dp"
+        android:text="@string/overview"/>
+
+
+    <TextView
+        android:id="@+id/movieOverview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+      android:layout_marginTop="15dp"
+        android:layout_marginEnd="4dp" />
+
+
+</LinearLayout>
+
+</ScrollView>
