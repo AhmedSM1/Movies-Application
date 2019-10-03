@@ -59,7 +59,6 @@ public class DetailsActivity extends AppCompatActivity {
     private ReviewAdapter reviewAdapter;
 
     //real-time database
-
     String userName;
     String key;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -94,15 +93,11 @@ public class DetailsActivity extends AppCompatActivity {
        movieRef.addListenerForSingleValueEvent(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                   Log.d(TAG, "datasnapshot "+dataSnapshot.getChildrenCount());
-
+            Log.d(TAG, "datasnapshot "+dataSnapshot.getChildrenCount());
                if (dataSnapshot.hasChild(key)){
-                   Log.d(TAG,"Movie ====> exists");
                    star.setImageResource(R.drawable.fav);
                    isFavourite = true;
                }else {
-                   Log.d(TAG,"Movie ====> does not exists");
                    star.setImageResource(R.drawable.unfav);
                    isFavourite = false;
                }
@@ -113,7 +108,7 @@ public class DetailsActivity extends AppCompatActivity {
                Log.d(TAG,""+databaseError.getMessage());
            }
        });
-     //  .orderByChild("drinkManufacturerID").equalTo(currentFirebaseUser.getUid())
+
 
 
 
@@ -139,20 +134,14 @@ public class DetailsActivity extends AppCompatActivity {
                           }
                       });
 
-
         String movieReleaseDate = mCurrentMovie.getReleaseDate();
         TextView releaseDateTextView = findViewById(R.id.release);
         releaseDateTextView.setText(movieReleaseDate);
-
-
         String movieTitle = mCurrentMovie.getTitle();
         TextView titleTextView = findViewById(R.id.movieTitle);
         titleTextView.setText(movieTitle);
-
         ImageView posterImageView = findViewById(R.id.movieImage);
-
-       Glide.with(this).load(POSTER_PATH+mCurrentMovie.getPosterPath()).into(posterImageView);
-
+        Glide.with(this).load(POSTER_PATH+mCurrentMovie.getPosterPath()).into(posterImageView);
         TextView voteAverageTextView = findViewById(R.id.movieVote);
         voteAverageTextView.setText(String.valueOf(mCurrentMovie.getVoteAverage())+"/10");
         String overview = mCurrentMovie.getOverview();
@@ -223,18 +212,14 @@ public class DetailsActivity extends AppCompatActivity {
     //methods for adding and deleting movies
     private void addMovie(Movie movie){
 
-          //TODO UID instead of username
-
         String UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        //TODO check if UI != null
 
         movieRef =  database.getReference().child(UID).child(key) ;
 
-                //database.getReference().child(userName);
         key = mCurrentMovie.getTitle();
 
-
         movieRef.push().setValue(movie);
+
         Toast.makeText(getApplicationContext(), "movie have been added  "+movie.getTitle(),Toast.LENGTH_SHORT).show();
         Log.d(TAG,"key of the movie is"+key);
     }

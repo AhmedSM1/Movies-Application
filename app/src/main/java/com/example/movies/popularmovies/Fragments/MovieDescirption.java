@@ -29,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MovieDescirption extends Fragment {
     public static final String ARG_MOVIE = "MOVIE";
-    public static final String ARG_USERID = "userID";
+
     public static final String POSTER_PATH = "https://image.tmdb.org/t/p/w500";
     public static final String TAG = MovieDescirption.class.getName();
     public Movie mCurrentMovie;
@@ -37,7 +37,7 @@ public class MovieDescirption extends Fragment {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference movieRef;
     private FirebaseAuth mFirebaseAuth;
-
+    String userID;
     String key;
     private ImageView star;
     boolean isFavourite;
@@ -62,11 +62,11 @@ public class MovieDescirption extends Fragment {
             key = mCurrentMovie.getTitle();
         }
 
-        String userID = mFirebaseAuth.getInstance().getCurrentUser().getUid();
+        userID = mFirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.d(TAG,"The userID is ==>"+userID);
-        movieRef = database.getReference().child(userID).child(key);
 
-        movieRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        movieRef = database.getReference().child(userID).child(key);
+        movieRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -76,10 +76,12 @@ public class MovieDescirption extends Fragment {
                     Log.d(TAG,"Movie ====> exists");
                     star.setImageResource(R.drawable.fav);
                     isFavourite = true;
+                    Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
                 }else {
                     Log.d(TAG,"Movie ====> does not exists");
                     star.setImageResource(R.drawable.unfav);
                     isFavourite = false;
+                    Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
                 }
             }
 
@@ -89,13 +91,6 @@ public class MovieDescirption extends Fragment {
             }
         });
 
-
-
-
-
-
-
-
     }
 
     @Override
@@ -103,7 +98,6 @@ public class MovieDescirption extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_movie_descirption, container, false);
-
 
         String movieReleaseDate = mCurrentMovie.getReleaseDate();
         TextView releaseDateTextView = view.findViewById(R.id.release);
@@ -120,12 +114,14 @@ public class MovieDescirption extends Fragment {
         overviewTextView.setText(overview);
 
         RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+        ratingBar.setIsIndicator(true);
         Float rating = ((float) mCurrentMovie.getVoteAverage());
         Float cal = (5 * rating) / 10;
         ratingBar.setRating(cal);
 
 
         star = view.findViewById(R.id.favoriteStar);
+        Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
 
         star.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,11 +140,6 @@ public class MovieDescirption extends Fragment {
             }
         });
 
-
-
-
-
-
         return view;
     }
 
@@ -156,10 +147,7 @@ public class MovieDescirption extends Fragment {
 
     //methods for adding and deleting movies
     private void addMovie(Movie movie){
-        //TODO UID instead of username
 
-        //TODO check if UI != null
-        //database.getReference().child(userName);
         key = movie.getTitle();
         movieRef.push().setValue(movie);
 
