@@ -25,15 +25,15 @@ import java.util.List;
       Context context;
       List<Movie> moviesArray;
       public static final String MOVIE_KEY = "movie";
-      public static final String USERNAME_KEY = "name ";
+      public static final String UID_KEY = "name ";
       public static final String POSTER_PATH = "https://image.tmdb.org/t/p/w500";
-      String userName;
+      String userID;
 
 
-      public MovieAdapter( Context context,List<Movie> moviesArray,String userName) {
+      public MovieAdapter( Context context,List<Movie> moviesArray) {
           this.context = context;
           this.moviesArray = moviesArray;
-          this.userName = userName;
+
 
       }
 
@@ -82,7 +82,7 @@ import java.util.List;
                       Intent intent = new Intent(context, Movie_Details.class);
                       Movie clickedMovie = moviesArray.get(getAdapterPosition());
                       intent.putExtra(MOVIE_KEY,  clickedMovie);
-                      intent.putExtra(USERNAME_KEY, userName);
+                      intent.putExtra(UID_KEY,userID);
 
 
                       context.startActivity(intent);

@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
-    String mUserName;
+    String mUserID;
 
-    public ViewModelFactory(String mUserName) {
-        this.mUserName = mUserName;
+    public ViewModelFactory(String mUserID) {
+        this.mUserID = mUserID;
 
 
     }
@@ -18,6 +18,6 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new MovieViewModel(mUserName);
+        return (T) new MovieViewModel(mUserID);
     }
 }

@@ -19,6 +19,10 @@ public interface Services {
     @GET ("movie/top_rated")
     Call<MoviesReply> getTopRatedMovies(@Query("api_key") String apiKey);
 
+    @GET("movie/upcoming")
+    Call<MoviesReply>getUpcomingMovies(@Query("api_key")String apiKey);
+
+
     @GET ("movie/{id}/videos")
     Call<TrailerReply> getTrailer(
             @Path("id") long id,

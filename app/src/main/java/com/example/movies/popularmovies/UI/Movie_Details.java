@@ -1,14 +1,9 @@
 package com.example.movies.popularmovies.UI;
 
-import android.net.Uri;
 import android.os.Bundle;
 
-import com.example.movies.popularmovies.Fragments.MovieDescirption;
-import com.example.movies.popularmovies.Fragments.ReviewsFragment;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.app.ActionBar;
@@ -18,11 +13,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.movies.popularmovies.UI.ui.main.SectionsPagerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,10 +28,16 @@ public class Movie_Details extends AppCompatActivity   {
     String key;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference movieRef;
+    private FirebaseAuth mFirebaseAuth;
+
+
+
+
+
     private static final String API_KEY = "bf3311f677001ebb53bbbeffd6ac9a32";
     public static final String POSTER_PATH = "https://image.tmdb.org/t/p/w500";
     public static final String MOVIE_KEY = "movie";
-    public static final String USERNAME_KEY = "name ";
+    public static final String UID_KEY = "name ";
     public static final String TAG = Movie_Details.class.getName();
     TextView mTitle;
     public ActionBar actionBar;
@@ -46,10 +48,6 @@ public class Movie_Details extends AppCompatActivity   {
         setContentView(R.layout.activity_movie__details);
         //getting the intent
         mCurrentMovie = getIntent().getParcelableExtra(MOVIE_KEY);
-        userName = getIntent().getStringExtra(USERNAME_KEY);
-
-        movieRef = database.getReference().child(userName);
-        key = mCurrentMovie.getTitle();
 
 
 
@@ -58,12 +56,6 @@ public class Movie_Details extends AppCompatActivity   {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(mCurrentMovie.getTitle());
         }
-
-
-
-
-
-
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager(),mCurrentMovie);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
@@ -71,14 +63,6 @@ public class Movie_Details extends AppCompatActivity   {
         tabs.setupWithViewPager(viewPager);
 
     }
-
-
-
-
-
-
-
-
 
         //methods for adding and deleting movies
         private void addMovie(Movie movie){

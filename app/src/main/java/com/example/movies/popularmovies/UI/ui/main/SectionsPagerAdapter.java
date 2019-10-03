@@ -22,11 +22,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private  int movieID;
     private final Context mContext;
 
-    public SectionsPagerAdapter(Context context, FragmentManager fm,Movie movie) {
+    public SectionsPagerAdapter(Context context, FragmentManager fm, Movie movie) {
         super(fm);
         mContext = context;
         this.movie = movie;
         this.movieID = movie.getId();
+
     }
 
     @Override

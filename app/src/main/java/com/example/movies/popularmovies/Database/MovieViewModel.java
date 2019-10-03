@@ -43,7 +43,7 @@ public class MovieViewModel extends ViewModel {
 
     public MovieViewModel( String userName) {
 
-       this.movieRef = database.getReference().child("Mohammed");
+       this.movieRef = database.getReference().child(userName);
 
        this.liveData = new FirebaseQueryLiveData(movieRef);
     }
@@ -56,13 +56,13 @@ public class MovieViewModel extends ViewModel {
             //assign a call instence so we can use it to get popular movie or top rated
 
             Call<MoviesReply> moviesCall;
-            if (sort.equals(String.valueOf(R.string.sort_popularity))) {
+            if (sort.equals("Most Popular")) {
                 Log.d("Calling", "Most Popular method is getting called");
                 moviesCall = services.getPopularMovies(API_KEY);
 
-            } else if (sort.equals(String.valueOf(R.string.sort_top_rated))) {
+            } else if (sort.equals("Top rated")) {
                 moviesCall = services.getTopRatedMovies(API_KEY);
-            } else moviesCall = services.getPopularMovies(API_KEY);
+            } else moviesCall = null;
 
             moviesCall.enqueue(new Callback<MoviesReply>() {
                 @Override

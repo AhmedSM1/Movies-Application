@@ -46,8 +46,9 @@ public class MainActivity extends AppCompatActivity{
     public static final int RC_SIGN_IN = 1;
     public static final String ANONYMOUS = "anonymous";
     public ActionBar actionBar;
-    private String mUserName;
 
+
+    private String mUserID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +73,9 @@ public class MainActivity extends AppCompatActivity{
                 if (user != null){
                     //user is signed in
                     Log.d(TAG, "onAuthStateChanged: " +user.getDisplayName());
-                    mUserName = user.getDisplayName();
-
+                    mUserID = user.getUid();
                     //if user is signed in generate Movies and pass in the username
-                    generateMovies(mUserName);
+                    generateMovies(mUserID);
                 }else  {
                     onSignedOutCleanUp();
                     //user is signed out
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity{
             }
         };
         //when the device is rotated the adapter will be null so we have to init in onCreate
-        adapter = new MovieAdapter(getApplicationContext(),movies,mUserName);
+        adapter = new MovieAdapter(getApplicationContext(),movies);
     }
 
     @Override
@@ -119,7 +119,6 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onPause() {
         super.onPause();
-        
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
 
     }
@@ -128,7 +127,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onStart() {
         super.onStart();
 
-        Log.d(LIFE_CYCLE, "onStart");
     }
 
     @Override
@@ -163,51 +161,48 @@ public class MainActivity extends AppCompatActivity{
     protected void onRestart() {
         super.onRestart();
         Log.d(LIFE_CYCLE, "onRestart ");
-
+        movies.clear();
         getSortValue();
-        generateMovies(mUserName);
+        generateMovies(mUserID);
         actionBar.setTitle(getSortValue());
 
     }
 
     private void onSignedOutCleanUp(){
-        mUserName = ANONYMOUS;
-
+        mUserID = ANONYMOUS;
+        movies.clear();
 
 
     }
     //TODO: GenerateMovies check username
     //TODO: In Firebase Replace username with UID
-    private void generateMovies(String mUserName){
+    private void generateMovies(String mUserID){
         Log.d(LIFE_CYCLE,"GENERATE ");
         movies = new ArrayList<>();
-        final ViewModelFactory modelFactory = new ViewModelFactory(mUserName);
+        final ViewModelFactory modelFactory = new ViewModelFactory(mUserID);
         MovieViewModel viewModel = ViewModelProviders.of(this,modelFactory).get(MovieViewModel.class);
         if (getSortValue().equals(getString(R.string.sort_by_favorites))) {
+            if (!viewModel.getLiveData().hasActiveObservers()) viewModel.getLiveData().observe(this, new Observer<DataSnapshot>() {
+                @Override
+                public void onChanged(DataSnapshot dataSnapshot) {
+                    Log.d("DATASNAPPP",dataSnapshot.toString());
+                    movies.clear();
+                    for (DataSnapshot itemSnapShot : dataSnapshot.getChildren()) {
+                        //Movie movie = itemSnapShot.getValue(Movie.class);
+                        Log.d("DATASNAPPP", "itemSnapShot = " + itemSnapShot.getValue());
+                        for (DataSnapshot data :itemSnapShot.getChildren()) {
+                            Movie movie = data.getValue(Movie.class);
+                            Log.d("DATASNAPPP", movie.title+"data  = " + data.child("title").getValue());
+                            movies.add(movie);
 
-          
-          viewModel.getLiveData().observe(this, new Observer<DataSnapshot>() {
+                        }
+                        adapter.notifyDataSetChanged();
 
-              @Override
-              public void onChanged(DataSnapshot dataSnapshot) {
+                    }
+                    Log.d(TAG, "movies list: "+movies.size());
+                }
+            });
 
-                  if (dataSnapshot != null) {
-                   //  movies.clear();
-                      for (DataSnapshot itemSnapShot : dataSnapshot.getChildren()) {
-                        Movie movie = itemSnapShot.getValue(Movie.class);
-                          Log.d(TAG, "itemSnapShot = " + itemSnapShot.getValue().toString());
-
-                          movies.add(movie);
-                          
-                         adapter.notifyDataSetChanged();
-
-                      }
-                      Log.d(TAG, "movies list: "+movies.size());
-
-                  }
-              }
-          });
-          
         } else if (getSortValue().equals(getString(R.string.sort_popularity))){
             viewModel.getMovies( getString(R.string.sort_popularity) ).observe(this, new Observer<List<Movie>>() {
                 @Override
@@ -217,8 +212,11 @@ public class MainActivity extends AppCompatActivity{
                         movies.addAll(moviesModels);
                         adapter.notifyDataSetChanged();
                     }
+
                 }
-            }); }else if (getSortValue().equals(getString(R.string.sort_top_rated))){
+            });
+
+             }else if (getSortValue().equals(getString(R.string.sort_top_rated))){
             viewModel.getMovies(getString(R.string.sort_top_rated)).observe(this, new Observer<List<Movie>>() {
                 @Override
                 public void onChanged(@Nullable List<Movie> moviesModels) {
@@ -229,9 +227,6 @@ public class MainActivity extends AppCompatActivity{
                         adapter.notifyDataSetChanged();
 
                     }
-                    for (int i =0 ; i< moviesModels.size(); i++){
-                        Log.d(TAG,"Top rated movie ====> "+moviesModels.get(i).getTitle());
-                    }
                 }
             });
         }
@@ -240,7 +235,7 @@ public class MainActivity extends AppCompatActivity{
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         // Calling the Adapter object and setting it to the recycler view.
-        adapter = new MovieAdapter(this, movies,mUserName);
+        adapter = new MovieAdapter(this, movies);
 
         recyclerView.setAdapter(adapter);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
