@@ -30,8 +30,10 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
     private List<Trailer> trailerList;
     public static final String TAG = TrailerAdapter.class.getName();
 
-     public TrailerAdapter( List<Trailer> trailerList) {
-        this.trailerList = trailerList; }
+     public TrailerAdapter( List<Trailer> trailerList,Context context) {
+        this.trailerList = trailerList;
+        this.context = context;
+     }
 
     @NonNull
     @Override
@@ -66,13 +68,11 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
 
         myViewHolder.trailerImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://www.youtube.com/watch?v=" + key));
-               context.startActivity(intent);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v="+key));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         });
 

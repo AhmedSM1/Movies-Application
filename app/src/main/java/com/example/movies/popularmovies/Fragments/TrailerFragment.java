@@ -111,7 +111,7 @@ public class TrailerFragment  extends Fragment  {
             @Override
             public void onResponse(Call<TrailerReply> call, Response<TrailerReply> response) {
                 List<Trailer> trailers = response.body().getResults();
-                adapter = new TrailerAdapter(trailers);
+                adapter = new TrailerAdapter(trailers,getActivity().getApplicationContext());
 
                 Log.d(TAG,trailers.toString()+"");
 
