@@ -27,7 +27,7 @@ public class Movie implements Parcelable {
     @Expose
     public String overview;
 
-    public Movie(int id,String title, String releaseDate, double voteAverage, String overview, String posterPath) {
+    public Movie(int id,String title, String releaseDate, double voteAverage, String overview, String posterPath, String backdrop_path) {
         super();
         this.id = id;
         this.title = title;
@@ -35,6 +35,7 @@ public class Movie implements Parcelable {
         this.voteAverage = voteAverage;
         this.overview = overview;
         this.posterPath = posterPath;
+
     }
 
     public Movie() {
@@ -45,6 +46,7 @@ public class Movie implements Parcelable {
         title = in.readString();
         releaseDate = in.readString();
         posterPath = in.readString();
+
         voteAverage = in.readDouble();
         overview = in.readString();
     }
@@ -131,6 +133,7 @@ public class Movie implements Parcelable {
         this.releaseDate = releaseDate;
         return this;
     }
+
 
     @Override
     public int describeContents() {

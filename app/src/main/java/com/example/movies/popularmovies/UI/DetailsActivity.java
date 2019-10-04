@@ -95,10 +95,10 @@ public class DetailsActivity extends AppCompatActivity {
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             Log.d(TAG, "datasnapshot "+dataSnapshot.getChildrenCount());
                if (dataSnapshot.hasChild(key)){
-                   star.setImageResource(R.drawable.fav);
+                //   star.setImageResource(R.drawable.fav);
                    isFavourite = true;
                }else {
-                   star.setImageResource(R.drawable.unfav);
+               //    star.setImageResource(R.drawable.unfav);
                    isFavourite = false;
                }
            }
@@ -122,12 +122,12 @@ public class DetailsActivity extends AppCompatActivity {
                           public void onClick(View v) {
                               if (!isFavourite) {
                                   addMovie(mCurrentMovie);
-                                  star.setImageResource(R.drawable.fav);
+                        //          star.setImageResource(R.drawable.fav);
                                   isFavourite = true;
                                   Toast.makeText(getApplicationContext(), "Added to My Favourites", Toast.LENGTH_SHORT).show();
                               } else {
                                   deleteFavorite();
-                                  star.setImageResource(R.drawable.unfav);
+                             //     star.setImageResource(R.drawable.unfav);
                                   isFavourite = false;
                                   Toast.makeText(getApplicationContext(), "Removed from My Favourites", Toast.LENGTH_SHORT).show();
                               }

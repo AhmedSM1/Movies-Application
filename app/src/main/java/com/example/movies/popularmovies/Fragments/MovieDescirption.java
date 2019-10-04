@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,7 +40,7 @@ public class MovieDescirption extends Fragment {
     private FirebaseAuth mFirebaseAuth;
     String userID;
     String key;
-    private ImageView star;
+    private FloatingActionButton hart;
     boolean isFavourite;
     public MovieDescirption() {
     }
@@ -74,12 +75,12 @@ public class MovieDescirption extends Fragment {
 
                 if (dataSnapshot.hasChild(key)){
                     Log.d(TAG,"Movie ====> exists");
-                    star.setImageResource(R.drawable.fav);
+                    hart.setImageResource(R.drawable.ic_favorite_black_24dp);
                     isFavourite = true;
                     Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
                 }else {
                     Log.d(TAG,"Movie ====> does not exists");
-                    star.setImageResource(R.drawable.unfav);
+                    hart.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                     isFavourite = false;
                     Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
                 }
@@ -103,37 +104,44 @@ public class MovieDescirption extends Fragment {
         TextView releaseDateTextView = view.findViewById(R.id.release);
         releaseDateTextView.setText(movieReleaseDate);
 
-        ImageView posterImageView = view.findViewById(R.id.movieImage);
+        ImageView posterImageView = view.findViewById(R.id.image_poster);
 
-        Glide.with(this).load(POSTER_PATH+mCurrentMovie.getPosterPath()).into(posterImageView);
+      Glide.with(this).load(POSTER_PATH+mCurrentMovie.getPosterPath()).into(posterImageView);
 
 
+        String title = mCurrentMovie.getTitle();
+        TextView movieTitle = view.findViewById(R.id.title);
+        movieTitle.setText(title);
 
         String overview = mCurrentMovie.getOverview();
-        TextView overviewTextView = view.findViewById(R.id.movieOverview);
+        TextView overviewTextView = view.findViewById(R.id.plot);
         overviewTextView.setText(overview);
 
-        RatingBar ratingBar = view.findViewById(R.id.ratingBar);
+
+
+        RatingBar ratingBar = view.findViewById(R.id.ratingbar);
         ratingBar.setIsIndicator(true);
         Float rating = ((float) mCurrentMovie.getVoteAverage());
+        Log.d(TAG, "onCreateView: vote Average"+mCurrentMovie.getVoteAverage());
+        Log.d(TAG, "onCreateView: movie overview"+mCurrentMovie.getOverview());
         Float cal = (5 * rating) / 10;
         ratingBar.setRating(cal);
 
 
-        star = view.findViewById(R.id.favoriteStar);
+        hart = view.findViewById(R.id.fab_detail);
         Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
 
-        star.setOnClickListener(new View.OnClickListener() {
+        hart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isFavourite) {
                     addMovie(mCurrentMovie);
-                    star.setImageResource(R.drawable.fav);
+                    hart.setImageResource(R.drawable.ic_favorite_black_24dp);
                     isFavourite = true;
                     Toast.makeText(getActivity().getApplicationContext(), "Added to My Favourites", Toast.LENGTH_SHORT).show();
                 } else {
                     deleteFavorite();
-                    star.setImageResource(R.drawable.unfav);
+                    hart.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                     isFavourite = false;
                     Toast.makeText(getContext().getApplicationContext(), "Removed from My Favourites", Toast.LENGTH_SHORT).show();
                 }
@@ -148,7 +156,6 @@ public class MovieDescirption extends Fragment {
     //methods for adding and deleting movies
     private void addMovie(Movie movie){
 
-        key = movie.getTitle();
         movieRef.push().setValue(movie);
 
         Toast.makeText(getContext(), "movie have been added  "+movie.getTitle(),Toast.LENGTH_SHORT).show();
@@ -156,18 +163,11 @@ public class MovieDescirption extends Fragment {
     }
 
     private void deleteFavorite(){
+
         movieRef.child(key).removeValue();
         Log.d(TAG,"key of the movie is"+key);
     }
 
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-    }
 }

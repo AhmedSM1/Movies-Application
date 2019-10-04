@@ -30,10 +30,6 @@ public class Movie_Details extends AppCompatActivity   {
     DatabaseReference movieRef;
     private FirebaseAuth mFirebaseAuth;
 
-
-
-
-
     private static final String API_KEY = "bf3311f677001ebb53bbbeffd6ac9a32";
     public static final String POSTER_PATH = "https://image.tmdb.org/t/p/w500";
     public static final String MOVIE_KEY = "movie";
@@ -48,9 +44,6 @@ public class Movie_Details extends AppCompatActivity   {
         setContentView(R.layout.activity_movie__details);
         //getting the intent
         mCurrentMovie = getIntent().getParcelableExtra(MOVIE_KEY);
-
-
-
         actionBar = getSupportActionBar();
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
@@ -62,18 +55,6 @@ public class Movie_Details extends AppCompatActivity   {
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
 
-    }
-
-        //methods for adding and deleting movies
-        private void addMovie(Movie movie){
-        movieRef.child(key).push().setValue(movie);
-        Toast.makeText(getApplicationContext(), "movie have been added  "+movie.getTitle(),Toast.LENGTH_SHORT).show();
-        Log.d(TAG,"key of the movie is"+key);
-    }
-
-    private void deleteFavorite(){
-        movieRef.child(key).removeValue();
-        Log.d(TAG,"key of the movie is"+key);
     }
 
     @Override

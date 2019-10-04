@@ -82,7 +82,7 @@ import java.util.List;
                       Intent intent = new Intent(context, Movie_Details.class);
                       Movie clickedMovie = moviesArray.get(getAdapterPosition());
                       intent.putExtra(MOVIE_KEY,  clickedMovie);
-                      intent.putExtra(UID_KEY,userID);
+
 
 
                       context.startActivity(intent);
