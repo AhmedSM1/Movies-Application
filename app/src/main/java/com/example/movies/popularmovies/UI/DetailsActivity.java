@@ -28,8 +28,6 @@ import com.example.movies.popularmovies.Model.Review;
 import com.example.movies.popularmovies.Model.Trailer;
 import com.example.movies.popularmovies.Model.TrailerReply;
 import com.example.movies.popularmovies.R;
-import com.github.florent37.materialviewpager.MaterialViewPager;
-import com.github.florent37.materialviewpager.header.HeaderDesign;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,25 +61,13 @@ public class DetailsActivity extends AppCompatActivity {
     String key;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference movieRef;
-    private MaterialViewPager mViewPager;
+
 
    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.details_activity);
 
-        Toolbar toolbar = mViewPager.getToolbar();
-
-       if (toolbar != null) {
-           setSupportActionBar(toolbar);
-
-           ActionBar actionBar = getSupportActionBar();
-           actionBar.setDisplayHomeAsUpEnabled(true);
-           actionBar.setDisplayShowHomeEnabled(true);
-           actionBar.setDisplayShowTitleEnabled(true);
-           actionBar.setDisplayUseLogoEnabled(false);
-           actionBar.setHomeButtonEnabled(true);
-       }
 
         mCurrentMovie = getIntent().getParcelableExtra("movie");
         userName = getIntent().getStringExtra("name");

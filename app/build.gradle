@@ -51,11 +51,13 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     //dependencies
     implementation 'com.flaviofaria:kenburnsview:1.0.7'
-    implementation 'com.github.florent37:materialviewpager:1.2.3'
+
+    implementation 'com.google.android.gms:play-services-ads:18.2.0'
+
 
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
-    implementation files('libs/YouTubeAndroidPlayerApi.jar')
+
 }

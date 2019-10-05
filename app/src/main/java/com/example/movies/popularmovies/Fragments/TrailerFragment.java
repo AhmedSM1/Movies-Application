@@ -27,11 +27,6 @@ import com.example.movies.popularmovies.Model.Review;
 import com.example.movies.popularmovies.Model.Trailer;
 import com.example.movies.popularmovies.Model.TrailerReply;
 import com.example.movies.popularmovies.R;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.google.android.youtube.player.YouTubeThumbnailLoader;
-import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.util.ArrayList;
 import java.util.List;

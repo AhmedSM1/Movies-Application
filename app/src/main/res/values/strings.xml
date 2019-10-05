@@ -31,6 +31,8 @@
     <string name="movie">movie</string>
     <string name="trailersList">Trailers</string>
     <string name="ReviewsList">Reviews</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+
     <!-- Strings related to Settings -->
     <string-array name="sort_by_pref_entry_array">
         <item>@string/sort_popularity_entry</item>

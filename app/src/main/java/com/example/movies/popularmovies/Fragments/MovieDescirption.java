@@ -2,6 +2,7 @@ package com.example.movies.popularmovies.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MovieDescirption extends Fragment {
     public static final String ARG_MOVIE = "MOVIE";
-
     public static final String POSTER_PATH = "https://image.tmdb.org/t/p/w500";
     public static final String TAG = MovieDescirption.class.getName();
     public Movie mCurrentMovie;
@@ -41,6 +41,9 @@ public class MovieDescirption extends Fragment {
     String userID;
     String key;
     private FloatingActionButton hart;
+
+
+
     boolean isFavourite;
     public MovieDescirption() {
     }
@@ -64,34 +67,11 @@ public class MovieDescirption extends Fragment {
         }
 
         userID = mFirebaseAuth.getInstance().getCurrentUser().getUid();
-        Log.d(TAG,"The userID is ==>"+userID);
+        Log.d(TAG, "The userID is ==>" + userID);
 
         movieRef = database.getReference().child(userID).child(key);
-        movieRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Log.d(TAG, "datasnapshot "+dataSnapshot.getChildrenCount());
-
-                if (dataSnapshot.hasChild(key)){
-                    Log.d(TAG,"Movie ====> exists");
-                    hart.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    isFavourite = true;
-                    Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
-                }else {
-                    Log.d(TAG,"Movie ====> does not exists");
-                    hart.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                    isFavourite = false;
-                    Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d(TAG,""+databaseError.getMessage());
-            }
-        });
-
+        isFavourite = isFavourite();
+        Log.d(TAG, "onCreate: isFavorite value ==> "+isFavourite);
     }
 
     @Override
@@ -122,14 +102,21 @@ public class MovieDescirption extends Fragment {
         RatingBar ratingBar = view.findViewById(R.id.ratingbar);
         ratingBar.setIsIndicator(true);
         Float rating = ((float) mCurrentMovie.getVoteAverage());
-        Log.d(TAG, "onCreateView: vote Average"+mCurrentMovie.getVoteAverage());
-        Log.d(TAG, "onCreateView: movie overview"+mCurrentMovie.getOverview());
         Float cal = (5 * rating) / 10;
         ratingBar.setRating(cal);
 
 
         hart = view.findViewById(R.id.fab_detail);
         Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
+
+        if (isFavourite == true){
+            hart.setImageResource(R.drawable.ic_favorite_black_24dp);
+        }else {
+            hart.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+        }
+
+
+
 
         hart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,9 +142,7 @@ public class MovieDescirption extends Fragment {
 
     //methods for adding and deleting movies
     private void addMovie(Movie movie){
-
         movieRef.push().setValue(movie);
-
         Toast.makeText(getContext(), "movie have been added  "+movie.getTitle(),Toast.LENGTH_SHORT).show();
         Log.d(TAG,"key of the movie is"+key);
     }
@@ -168,6 +153,42 @@ public class MovieDescirption extends Fragment {
         Log.d(TAG,"key of the movie is"+key);
     }
 
+    public boolean isFavourite() {
+        movieRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Log.d(TAG, "datasnapshot "+dataSnapshot.getChildrenCount());
+
+                if (dataSnapshot.hasChild(key)){
+                    Log.d(TAG,"Movie ====> exists");
+
+                    isFavourite = true;
+                    Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
+                }else {
+                    Log.d(TAG,"Movie ====> does not exists");
+
+                    isFavourite = false;
+                    Log.d(TAG, "onCreateView: IsFavorite is  "+isFavourite);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG,""+databaseError.getMessage());
+            }
+        });
+        return isFavourite;
+    }
 
 
-}
+
+
+
+
+
+
+   }
+
+
+
