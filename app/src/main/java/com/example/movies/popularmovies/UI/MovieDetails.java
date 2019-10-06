@@ -11,31 +11,17 @@ import androidx.core.app.NavUtils;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.movies.popularmovies.UI.ui.main.SectionsPagerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class Movie_Details extends AppCompatActivity   {
+public class MovieDetails extends AppCompatActivity   {
     public Movie mCurrentMovie;
-    public String userName;
-    String key;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference movieRef;
-    private FirebaseAuth mFirebaseAuth;
-
-    private static final String API_KEY = "bf3311f677001ebb53bbbeffd6ac9a32";
-    public static final String POSTER_PATH = "https://image.tmdb.org/t/p/w500";
     public static final String MOVIE_KEY = "movie";
-    public static final String UID_KEY = "name ";
-    public static final String TAG = Movie_Details.class.getName();
-    TextView mTitle;
     public ActionBar actionBar;
 
     @Override

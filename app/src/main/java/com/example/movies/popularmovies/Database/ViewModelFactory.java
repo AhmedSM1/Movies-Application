@@ -11,8 +11,6 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     public ViewModelFactory(String mUserID) {
         this.mUserID = mUserID;
-
-
     }
 
     @NonNull

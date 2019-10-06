@@ -1,31 +1,19 @@
 
 package com.example.movies.popularmovies.Database;
 
-import android.app.Application;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.movies.popularmovies.API.Client;
 import com.example.movies.popularmovies.API.Services;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.Model.MoviesReply;
-import com.example.movies.popularmovies.R;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -42,13 +30,9 @@ public class MovieViewModel extends ViewModel {
     private  FirebaseQueryLiveData liveData;
 
     public MovieViewModel( String userID) {
-
        this.movieRef = database.getReference().child(userID);
-
        this.liveData = new FirebaseQueryLiveData(movieRef);
     }
-
-
 
     public LiveData<List<Movie>> getMovies(String sort) {
             Client client = new Client();

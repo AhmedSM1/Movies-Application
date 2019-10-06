@@ -2,7 +2,6 @@ package com.example.movies.popularmovies.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.R;
-import com.example.movies.popularmovies.UI.DetailsActivity;
-import com.example.movies.popularmovies.UI.Movie_Details;
+import com.example.movies.popularmovies.UI.MovieDetails;
 
 
 import java.util.List;
@@ -79,7 +77,7 @@ import java.util.List;
               itemView.setOnClickListener(new View.OnClickListener() {
                   @Override
                   public void onClick(View itemView) {
-                      Intent intent = new Intent(context, Movie_Details.class);
+                      Intent intent = new Intent(context, MovieDetails.class);
                       Movie clickedMovie = moviesArray.get(getAdapterPosition());
                       intent.putExtra(MOVIE_KEY,  clickedMovie);
 

@@ -192,13 +192,7 @@ public class MovieDescirption extends Fragment {
     }
 
 
-
-
-
-
-
-
-   }
+}
 
 
 

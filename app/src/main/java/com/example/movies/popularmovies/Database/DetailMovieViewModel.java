@@ -23,9 +23,12 @@ public class DetailMovieViewModel extends ViewModel {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference movieRef = database.getReference(MOVIES_PATH);
+    private FirebaseQueryLiveData liveData;
 
 
+    public DetailMovieViewModel(String key) {
 
+    }
 
     public MutableLiveData<Movie> getMovie() {
         return movie;

@@ -27,15 +27,12 @@
                 android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
         <activity
-            android:name=".UI.Movie_Details"
+            android:name=".UI.MovieDetails"
             android:label="@string/title_activity_movie__details"
             android:parentActivityName=".UI.MainActivity" />
         <activity
             android:name=".UI.Settings"
             android:label="@string/settings"
-            android:parentActivityName=".UI.MainActivity" />
-        <activity
-            android:name=".UI.DetailsActivity"
             android:parentActivityName=".UI.MainActivity" />
         <activity
             android:name=".UI.MainActivity"
