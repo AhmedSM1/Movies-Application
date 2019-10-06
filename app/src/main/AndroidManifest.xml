@@ -10,24 +10,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8590994794759974~9400426262"/>
-
-        <activity
-            android:name=".UI.Movie_Details"
-            android:label="@string/title_activity_movie__details"
-            android:parentActivityName=".UI.MainActivity"></activity>
-
-        <receiver android:name=".Widget.Widget">
+        <receiver android:name="com.example.movies.popularmovies.Widget.FavoriteMoviesWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/widget_info" />
+                android:resource="@xml/favorite_movies_widget_info" />
         </receiver>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8590994794759974~9400426262" />
+
+        <activity
+            android:name=".UI.Movie_Details"
+            android:label="@string/title_activity_movie__details"
+            android:parentActivityName=".UI.MainActivity" />
+
 
         <activity
             android:name=".UI.Settings"

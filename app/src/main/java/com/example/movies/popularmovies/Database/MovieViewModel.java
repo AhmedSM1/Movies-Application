@@ -41,9 +41,9 @@ public class MovieViewModel extends ViewModel {
     DatabaseReference movieRef;
     private  FirebaseQueryLiveData liveData;
 
-    public MovieViewModel( String userName) {
+    public MovieViewModel( String userID) {
 
-       this.movieRef = database.getReference().child(userName);
+       this.movieRef = database.getReference().child(userID);
 
        this.liveData = new FirebaseQueryLiveData(movieRef);
     }

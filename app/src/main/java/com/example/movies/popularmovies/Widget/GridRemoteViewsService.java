@@ -2,33 +2,21 @@ package com.example.movies.popularmovies.Widget;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.widget.RemoteViews;
+import android.widget.RemoteViewsService;
 
-public class RemoteViewsService extends android.widget.RemoteViewsService {
-
-     private Cursor cursor;
-     private Context context;
+public class GridRemoteViewsService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
         return new GridViewsFactory(this.getApplicationContext());
     }
 
+    class GridViewsFactory implements  RemoteViewsService.RemoteViewsFactory{
+            private Context context;
 
-
-
-
-
-
-
-    class GridViewsFactory implements RemoteViewsService.RemoteViewsFactory{
-       private Cursor cursor;
-       private Context context;
-
-       public GridViewsFactory(Context context){
-           this.context = context;
-       }
-
+        public GridViewsFactory(Context context) {
+            this.context = context;
+        }
 
         @Override
         public void onCreate() {
@@ -37,31 +25,23 @@ public class RemoteViewsService extends android.widget.RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-         //contract class
-
 
         }
 
         @Override
         public void onDestroy() {
-              if (cursor != null){
-                  cursor.close();
-              }
+
         }
 
         @Override
         public int getCount() {
-            if (cursor != null){
-                return cursor.getCount();
-            }else {
-                return 0;
-            }
+            return 0;
         }
 
         @Override
         public RemoteViews getViewAt(int i) {
-           return null;
-       }
+            return null;
+        }
 
         @Override
         public RemoteViews getLoadingView() {
@@ -70,19 +50,23 @@ public class RemoteViewsService extends android.widget.RemoteViewsService {
 
         @Override
         public int getViewTypeCount() {
-            return 1;
+            return 0;
         }
 
         @Override
         public long getItemId(int i) {
-            return i;
+            return 0;
         }
 
         @Override
         public boolean hasStableIds() {
-            return true;
+            return false;
         }
     }
+
+
+
+
 
 
 

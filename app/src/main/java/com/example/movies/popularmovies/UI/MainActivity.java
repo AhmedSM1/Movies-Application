@@ -181,7 +181,10 @@ public class MainActivity extends AppCompatActivity{
     protected void onRestart() {
         super.onRestart();
         Log.d(LIFE_CYCLE, "onRestart ");
-        movies.clear();
+        if (movies != null){
+            movies.clear();
+        }
+
         getSortValue();
         generateMovies(mUserID);
         actionBar.setTitle(getSortValue());
@@ -190,7 +193,10 @@ public class MainActivity extends AppCompatActivity{
 
     private void onSignedOutCleanUp(){
         mUserID = ANONYMOUS;
-        movies.clear();
+        if (movies!= null){
+            movies.clear();
+        }
+
 
 
     }
