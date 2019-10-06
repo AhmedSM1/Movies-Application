@@ -1,5 +1,6 @@
 package com.example.movies.popularmovies.UI;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -37,6 +38,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,9 +58,13 @@ public class MainActivity extends AppCompatActivity{
     public static final int RC_SIGN_IN = 1;
     public static final String ANONYMOUS = "anonymous";
     public ActionBar actionBar;
-
-
     private String mUserID;
+
+    private static final String PREFS_TAG = "SharedPrefs";
+    private static final String FAVORITE_TAG = "Favorite";
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,11 +153,7 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
 
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -200,8 +206,6 @@ public class MainActivity extends AppCompatActivity{
 
 
     }
-    //TODO: GenerateMovies check username
-    //TODO: In Firebase Replace username with UID
     private void generateMovies(String mUserID){
         Log.d(LIFE_CYCLE,"GENERATE ");
         movies = new ArrayList<>();

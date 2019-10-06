@@ -21,7 +21,8 @@ http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
     <dimen name="youtubeLogo_width">50dp</dimen>
     <dimen name="yotubeLogo_height">83dp</dimen>
     <dimen name="trailerButton_width">390dp</dimen>
-    <dimen name="widget_textSize">18sp</dimen>
+    <dimen name="widget_textSize">20sp</dimen>
+    <dimen name="widget_label_text_size">25sp</dimen>
     <dimen name="review_label">25sp</dimen>
     <dimen name="author_name">16sp</dimen>
     <dimen name="review_content">13sp</dimen>

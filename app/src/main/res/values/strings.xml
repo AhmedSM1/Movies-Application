@@ -27,7 +27,7 @@
     <string name="sort_by_favorites_entry">Favorite Movies</string>
     <string name="sort_popularity_entry">Most Popular Movies</string>
     <string name="sort_top_rated_entry">Top rated Movies</string>
-    <string name="favorite">Favoirte</string>
+    <string name="favorite">Favorite Movies</string>
     <string name="movie">movie</string>
     <string name="trailersList">Trailers</string>
     <string name="ReviewsList">Reviews</string>
