@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import com.example.movies.popularmovies.API.Client;
 import com.example.movies.popularmovies.API.Services;
 import com.example.movies.popularmovies.Adapters.ReviewAdapter;
+import com.example.movies.popularmovies.BuildConfig;
 import com.example.movies.popularmovies.Model.Review;
 import com.example.movies.popularmovies.Model.ReviewReply;
 import com.example.movies.popularmovies.R;
@@ -40,7 +41,6 @@ public class ReviewsFragment extends Fragment {
     List<Review> reviews;
     ReviewAdapter mAdapter;
     public static final String ARG_MOVIEID = "movieID";
-    private static final String API_KEY = "bf3311f677001ebb53bbbeffd6ac9a32";
     private LinearLayoutManager manager;
 
     private Parcelable mReviewRecyclerViewState;
@@ -103,7 +103,7 @@ public class ReviewsFragment extends Fragment {
         Services services = client.getClient().create(Services.class);
         reviews = new ArrayList<>();
         Call<ReviewReply> call;
-        call = services.getReviwes(movie_id,API_KEY);
+        call = services.getReviwes(movie_id, BuildConfig.API_KEY);
         call.enqueue(new Callback<ReviewReply>() {
                          @Override
                          public void onResponse(Call<ReviewReply> call, Response<ReviewReply> response) {

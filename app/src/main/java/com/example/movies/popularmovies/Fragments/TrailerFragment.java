@@ -2,6 +2,7 @@ package com.example.movies.popularmovies.Fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.movies.popularmovies.API.Client;
 import com.example.movies.popularmovies.API.Services;
 import com.example.movies.popularmovies.Adapters.TrailerAdapter;
+import com.example.movies.popularmovies.BuildConfig;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.Model.Review;
 import com.example.movies.popularmovies.Model.Trailer;
@@ -42,7 +44,7 @@ public class TrailerFragment  extends Fragment  {
     TrailerAdapter adapter;
     RecyclerView recyclerView;
     List<Trailer> trailers;
-    private static final String API_KEY = "bf3311f677001ebb53bbbeffd6ac9a32";
+
     public static final String ARG_MOVIEID = "movieID";
     public static final String TAG = TrailerFragment.class.getName();
     LinearLayoutManager manager;
@@ -104,7 +106,7 @@ public class TrailerFragment  extends Fragment  {
         Services services = client.getClient().create(Services.class);
         trailers = new ArrayList<>();
         Call<TrailerReply> trailerCall;
-        trailerCall = services.getTrailer(movieID,API_KEY);
+        trailerCall = services.getTrailer(movieID,BuildConfig.API_KEY);
         trailerCall.enqueue(new Callback<TrailerReply>() {
             @Override
             public void onResponse(Call<TrailerReply> call, Response<TrailerReply> response) {

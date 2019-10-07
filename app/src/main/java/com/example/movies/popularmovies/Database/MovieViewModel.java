@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.movies.popularmovies.API.Client;
 import com.example.movies.popularmovies.API.Services;
+import com.example.movies.popularmovies.BuildConfig;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.Model.MoviesReply;
 import com.google.firebase.database.DataSnapshot;
@@ -21,7 +22,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieViewModel extends ViewModel {
-    private static final String API_KEY = "bf3311f677001ebb53bbbeffd6ac9a32";
     MutableLiveData<List <Movie>> movieLiveData = new MutableLiveData<>();
     public static final String TAG = MovieViewModel.class.getName();
 
@@ -42,10 +42,10 @@ public class MovieViewModel extends ViewModel {
             Call<MoviesReply> moviesCall;
             if (sort.equals("Most Popular")) {
                 Log.d("Calling", "Most Popular method is getting called");
-                moviesCall = services.getPopularMovies(API_KEY);
+                moviesCall = services.getPopularMovies(BuildConfig.API_KEY);
 
             } else if (sort.equals("Top rated")) {
-                moviesCall = services.getTopRatedMovies(API_KEY);
+                moviesCall = services.getTopRatedMovies(BuildConfig.API_KEY);
             } else moviesCall = null;
 
             moviesCall.enqueue(new Callback<MoviesReply>() {
