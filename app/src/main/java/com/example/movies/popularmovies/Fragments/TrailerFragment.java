@@ -66,7 +66,7 @@ public class TrailerFragment  extends Fragment  {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             movieID = getArguments().getInt(ARG_MOVIEID);
-            getTrailers(movieID);
+
         }
 
         Log.d(TAG,movieID+"");
@@ -81,6 +81,7 @@ public class TrailerFragment  extends Fragment  {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
       View view = inflater.inflate(R.layout.fragment_movie_trailer,container,false);
       recyclerView = view.findViewById(R.id.trailersRecyclerView);
+        getTrailers(movieID);
       return view;
 
 

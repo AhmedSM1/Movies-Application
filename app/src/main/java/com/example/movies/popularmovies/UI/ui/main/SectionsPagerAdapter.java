@@ -21,6 +21,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private Movie movie;
     private  int movieID;
     private final Context mContext;
+    private FragmentManager fragmentManager;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm, Movie movie) {
         super(fm);
@@ -67,7 +68,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-
         return 3;
     }
 }
