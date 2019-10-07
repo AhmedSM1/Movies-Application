@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,11 +42,13 @@ public class TrailerFragment  extends Fragment  {
     TrailerAdapter adapter;
     RecyclerView recyclerView;
     List<Trailer> trailers;
-
     private static final String API_KEY = "bf3311f677001ebb53bbbeffd6ac9a32";
     public static final String ARG_MOVIEID = "movieID";
     public static final String TAG = TrailerFragment.class.getName();
+    LinearLayoutManager manager;
 
+    private Parcelable mTailerwRecyclerViewState;
+    public static final String Trailer_STATE_KEY="trailerPositionKey";
     public TrailerFragment() {
 
     }
@@ -109,7 +112,7 @@ public class TrailerFragment  extends Fragment  {
 
                 Log.d(TAG,trailers.toString()+"");
 
-                RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity().getApplicationContext());
+                 manager = new LinearLayoutManager(getActivity().getApplicationContext());
 
                 recyclerView.setLayoutManager(manager);
 
@@ -121,6 +124,7 @@ public class TrailerFragment  extends Fragment  {
 
                 adapter.notifyDataSetChanged();
 
+                 restoreRecyclerViewState();
             }
                 @Override
             public void onFailure(Call<TrailerReply> call, Throwable t) {
@@ -132,5 +136,26 @@ public class TrailerFragment  extends Fragment  {
 
 }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null){
+            mTailerwRecyclerViewState = savedInstanceState.getParcelable(Trailer_STATE_KEY);
+        }
+    }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mTailerwRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(Trailer_STATE_KEY,mTailerwRecyclerViewState);
+
+    }
+
+
+    private void restoreRecyclerViewState(){
+        if (mTailerwRecyclerViewState != null){
+            recyclerView.getLayoutManager().onRestoreInstanceState(mTailerwRecyclerViewState);
+        }
+    }
 }
