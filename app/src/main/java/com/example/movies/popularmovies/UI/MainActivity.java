@@ -60,10 +60,6 @@ public class MainActivity extends AppCompatActivity{
     public ActionBar actionBar;
     private String mUserID;
 
-    private static final String PREFS_TAG = "SharedPrefs";
-    private static final String FAVORITE_TAG = "Favorite";
-
-
 
 
     @Override
@@ -136,8 +132,6 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-
-   
     @Override
     protected void onResume() {
         super.onResume();

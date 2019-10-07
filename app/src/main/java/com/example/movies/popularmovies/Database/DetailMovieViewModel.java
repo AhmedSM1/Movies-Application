@@ -19,19 +19,21 @@ public class DetailMovieViewModel extends ViewModel {
     MutableLiveData<Movie> movie = new MutableLiveData<>();
     public static final String TAG = DetailMovieViewModel.class.getName();
     //real-time database
-    public static final String MOVIES_PATH = "movies";
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference movieRef = database.getReference(MOVIES_PATH);
-    private FirebaseQueryLiveData liveData;
+    DatabaseReference movieRef;
+    private SingleMovieQueryLiveData liveData;
+    String userID;
+    int key;
 
 
-    public DetailMovieViewModel(String key) {
-
+    public DetailMovieViewModel(String userID,int key) {
+          this.movieRef = database.getReference().child(userID).child(String.valueOf(key));
+          this.liveData = new SingleMovieQueryLiveData(movieRef);
     }
 
-    public MutableLiveData<Movie> getMovie() {
-        return movie;
+    public SingleMovieQueryLiveData getLiveData() {
+        return liveData;
     }
 }
 

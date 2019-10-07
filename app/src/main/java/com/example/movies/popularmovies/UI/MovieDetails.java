@@ -61,4 +61,9 @@ public class MovieDetails extends AppCompatActivity   {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+
+
 }
