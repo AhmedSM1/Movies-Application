@@ -50,7 +50,6 @@ public class TrailerFragment  extends Fragment  {
 
     }
 
-    // TODO: Rename and change types and number of parameters
     public static TrailerFragment newInstance(int movieID) {
         TrailerFragment fragment = new TrailerFragment();
         Bundle args = new Bundle();

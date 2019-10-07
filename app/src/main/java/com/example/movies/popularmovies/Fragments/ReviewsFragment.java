@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +41,10 @@ public class ReviewsFragment extends Fragment {
     ReviewAdapter mAdapter;
     public static final String ARG_MOVIEID = "movieID";
     private static final String API_KEY = "bf3311f677001ebb53bbbeffd6ac9a32";
+    private LinearLayoutManager manager;
 
+    private Parcelable mReviewRecyclerViewState;
+    public static final String STATE_KEY="positionKey";
     public ReviewsFragment() {
         // Required empty public constructor
     }
@@ -57,7 +63,7 @@ public class ReviewsFragment extends Fragment {
         if (getArguments() != null) {
             movieID = getArguments().getInt(ARG_MOVIEID);
         }
-         populateReview(movieID);
+        populateReview(movieID);
     }
 
     @Override
@@ -67,6 +73,15 @@ public class ReviewsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_movie__reviews, container, false);
         mRecyclerView = view.findViewById(R.id.reviewRecyclerView);
         return view;
+    }
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null){
+            mReviewRecyclerViewState = savedInstanceState.getParcelable(STATE_KEY);
+        }
     }
 
     @Override
@@ -99,7 +114,7 @@ public class ReviewsFragment extends Fragment {
 
                             // GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getActivity().getApplicationContext(),1);
 
-                             RecyclerView.LayoutManager manager = new LinearLayoutManager(getActivity().getApplicationContext());
+                             manager = new LinearLayoutManager(getActivity().getApplicationContext());
 
 
                              mRecyclerView.setLayoutManager(manager);
@@ -111,6 +126,9 @@ public class ReviewsFragment extends Fragment {
                              mRecyclerView.setAdapter(mAdapter);
 
                              mAdapter.notifyDataSetChanged();
+
+                             restoreRecyclerViewState();
+
                          }
 
                          @Override
@@ -119,13 +137,21 @@ public class ReviewsFragment extends Fragment {
                      });
 
 
-
-
-
-
-
-
-
     }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mReviewRecyclerViewState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(STATE_KEY,mReviewRecyclerViewState);
+    }
+
+
+    private void restoreRecyclerViewState(){
+      if (mReviewRecyclerViewState != null){
+          mRecyclerView.getLayoutManager().onRestoreInstanceState(mReviewRecyclerViewState);
+      }
+    }
+
 
 }
