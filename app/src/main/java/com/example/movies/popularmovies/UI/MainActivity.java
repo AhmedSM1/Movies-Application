@@ -3,6 +3,7 @@ package com.example.movies.popularmovies.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,8 +60,10 @@ public class MainActivity extends AppCompatActivity{
     public static final String ANONYMOUS = "anonymous";
     public ActionBar actionBar;
     private String mUserID;
+    RecyclerView recyclerView;
 
-
+    private Parcelable mMoviesRecyclerViewState;
+    public static final String STATE_KEY="positionKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +121,12 @@ public class MainActivity extends AppCompatActivity{
         };
         //when the device is rotated the adapter will be null so we have to init in onCreate
         adapter = new MovieAdapter(getApplicationContext(),movies);
+
+        if (savedInstanceState != null){
+            mMoviesRecyclerViewState = savedInstanceState.getParcelable(STATE_KEY);
+        }
+
+
     }
 
     @Override
@@ -257,14 +266,28 @@ public class MainActivity extends AppCompatActivity{
 
         Toast.makeText(this, "Sorting by   " + getSortValue(),Toast.LENGTH_LONG).show();
 
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+         recyclerView = findViewById(R.id.recyclerView);
         // Calling the Adapter object and setting it to the recycler view.
         adapter = new MovieAdapter(this, movies);
 
         recyclerView.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
+         restoreRecyclerViewState();
+    }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mMoviesRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+        outState.putParcelable(STATE_KEY,mMoviesRecyclerViewState);
+    }
+
+
+    private void restoreRecyclerViewState(){
+        if (mMoviesRecyclerViewState != null){
+            recyclerView.getLayoutManager().onRestoreInstanceState(mMoviesRecyclerViewState);
+        }
     }
 
 }
