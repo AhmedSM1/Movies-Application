@@ -131,7 +131,7 @@ public class TrailerFragment  extends Fragment  {
             }
                 @Override
             public void onFailure(Call<TrailerReply> call, Throwable t) {
-                Toast.makeText(context,"This Movie doesnt have trailers",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,R.string.no_trailer,Toast.LENGTH_LONG).show();
 
             }
         });

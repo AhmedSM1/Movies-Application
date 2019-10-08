@@ -6,8 +6,6 @@
 <item
     android:title="@string/sign_out"
     android:id="@+id/sign_out_menu"/>
-<item
-    android:id="@+id/User"
-    android:title="@string/user_profile"/>
+
 
 </menu>

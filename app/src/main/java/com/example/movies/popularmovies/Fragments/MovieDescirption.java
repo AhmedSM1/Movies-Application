@@ -88,38 +88,8 @@ public class MovieDescirption extends Fragment {
         }
 
 
-     userID = mFirebaseAuth.getInstance().getUid();
-      movieRef = database.getReference().child(userID).child(String.valueOf(key));
-
-
-        /*
-     movieRef = database.getReference().child(userID).child(String.valueOf(key));
-        movieRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                Log.d(TAG, "datasnapshot "+dataSnapshot.toString());
-                Log.d(TAG, "onDataChange: key == "+key);
-                Log.d(TAG, "onDataChange: movie ref == "+movieRef.toString());
-                if (dataSnapshot.exists()){
-
-                    Log.d(TAG,"Movie ====> exists");
-                    hart.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    isFavourite = true;
-
-                }else {
-                    Log.d(TAG,"Movie ====> does not exists");
-                    hart.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                    isFavourite = false;
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d(TAG,""+databaseError.getMessage());
-            }
-        });*/
+        userID = mFirebaseAuth.getInstance().getUid();
+        movieRef = database.getReference().child(userID).child(String.valueOf(key));
 
         final DetailViewModelFactory factory = new DetailViewModelFactory(userID,key);
         DetailMovieViewModel model = ViewModelProviders.of(this,factory).get(DetailMovieViewModel.class);
@@ -209,12 +179,12 @@ public class MovieDescirption extends Fragment {
                     addMovie(mCurrentMovie);
                     hart.setImageResource(R.drawable.ic_favorite_black_24dp);
                     isFavourite = true;
-                    Toast.makeText(getActivity().getApplicationContext(), "Added to My Favourites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), R.string.add_to_fav, Toast.LENGTH_SHORT).show();
                 } else {
                     deleteFavorite();
                     hart.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                     isFavourite = false;
-                    Toast.makeText(getContext().getApplicationContext(), "Removed from My Favourites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext().getApplicationContext(), R.string.removed_from_fav, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -242,7 +212,7 @@ public class MovieDescirption extends Fragment {
     //methods for adding and deleting movies
     private void addMovie(Movie movie){
         movieRef.push().setValue(movie);
-        Toast.makeText(getContext(), "movie have been added  "+movie.getTitle(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), R.string.added_movie+movie.getTitle(),Toast.LENGTH_SHORT).show();
         Log.d(TAG,"key of the movie is"+key);
     }
 

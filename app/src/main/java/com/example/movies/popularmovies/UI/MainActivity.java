@@ -134,9 +134,9 @@ public class MainActivity extends AppCompatActivity{
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN){
              if (resultCode == RESULT_OK){
-                 Toast.makeText(MainActivity.this,"Signed In!",Toast.LENGTH_SHORT).show();
+                 Toast.makeText(MainActivity.this,R.string.sign_in,Toast.LENGTH_SHORT).show();
              } else if (resultCode == RESULT_CANCELED){
-                 Toast.makeText(MainActivity.this,"Signed In  canceled!!",Toast.LENGTH_SHORT).show();
+                 Toast.makeText(MainActivity.this,R.string.sign_in_can,Toast.LENGTH_SHORT).show();
                  finish(); }
         }
     }
@@ -264,14 +264,14 @@ public class MainActivity extends AppCompatActivity{
             });
         }
 
-        Toast.makeText(this, "Sorting by   " + getSortValue(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.sort_by_key + getSortValue(),Toast.LENGTH_LONG).show();
 
          recyclerView = findViewById(R.id.recyclerView);
         // Calling the Adapter object and setting it to the recycler view.
         adapter = new MovieAdapter(this, movies);
 
         recyclerView.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
          restoreRecyclerViewState();
     }
@@ -279,7 +279,9 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        mMoviesRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+        if(mMoviesRecyclerViewState != null){
+            mMoviesRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+        }
         outState.putParcelable(STATE_KEY,mMoviesRecyclerViewState);
     }
 

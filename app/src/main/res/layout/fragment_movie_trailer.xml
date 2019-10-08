@@ -17,7 +17,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="44dp"
-        android:isScrollContainer="true"></androidx.recyclerview.widget.RecyclerView>
+        android:isScrollContainer="true"/>
 
 
 
