@@ -1,6 +1,7 @@
 package com.example.movies.popularmovies.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -235,6 +236,14 @@ public class MovieDescirption extends Fragment {
         outState.putString(CURRENT_MOVIE_POSTER,moviePoster);
 
     }
+
+    private void addToWidget(){
+
+    }
+    private void deleteFromWidget(){
+
+    }
+
 
 }
 

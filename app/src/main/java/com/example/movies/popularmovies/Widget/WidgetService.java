@@ -1,5 +1,7 @@
 package com.example.movies.popularmovies.Widget;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -33,6 +35,7 @@ public class WidgetService extends RemoteViewsService {
          Intent intent;
 
         public static final String TAG = "Widget";
+
         private FirebaseAuth auth;
 
         private DatabaseReference movieRef;
@@ -49,11 +52,12 @@ public class WidgetService extends RemoteViewsService {
 
                  user = auth.getCurrentUser();
                  assert user != null;
-
                  userId = auth.getCurrentUser().getUid();
 
                  movieRef = FirebaseDatabase.getInstance().getReference().child(userId);
+
                  Log.d(TAG, "getMovie: Movie Ref = "+movieRef.toString());
+
                  movieRef.addValueEventListener(new ValueEventListener() {
                      @Override
                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -64,7 +68,9 @@ public class WidgetService extends RemoteViewsService {
                                  Log.d(TAG, "onDataChange: Movie is "+movie.getTitle());
                                  movies.add(movie);
                              }
+
                          }
+
                      }
 
                      @Override
@@ -72,10 +78,6 @@ public class WidgetService extends RemoteViewsService {
                          Log.d(TAG, "onCancelled: "+databaseError.getMessage());
                      }
                  });
-
-
-
-
              }catch (NullPointerException e){
                  e.printStackTrace();
              }
@@ -93,12 +95,21 @@ public class WidgetService extends RemoteViewsService {
 
         @Override
         public void onDataSetChanged() {
-             getMovie();
+            Context context = getApplicationContext();
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            ComponentName thisWidget = new ComponentName(context, FavoriteWidget.class);
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
+            Log.d(TAG, "onDataSetChanged: "+appWidgetIds.toString());
+            Log.d(TAG, "onDataSetChanged: app widget: "+appWidgetManager.toString());
+
+
+
+            appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_list);
         }
 
         @Override
         public void onDestroy() {
-
+            Log.d(TAG, "onDestroy");
         }
 
         @Override
@@ -134,14 +145,4 @@ public class WidgetService extends RemoteViewsService {
             return true;
         }
     }
-
-
-
-
-
-
-
-
-
-
 }

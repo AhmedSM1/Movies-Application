@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity{
     public ActionBar actionBar;
     private String mUserID;
     RecyclerView recyclerView;
-
     private Parcelable mMoviesRecyclerViewState;
     public static final String STATE_KEY="positionKey";
 
@@ -70,7 +69,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-         actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         if (actionBar != null){
             actionBar.getDisplayOptions();
             actionBar.setTitle(getSortValue());
@@ -89,7 +88,6 @@ public class MainActivity extends AppCompatActivity{
         adView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
-
 
         Log.d(LIFE_CYCLE,"onCreate");
 
@@ -121,12 +119,9 @@ public class MainActivity extends AppCompatActivity{
         };
         //when the device is rotated the adapter will be null so we have to init in onCreate
         adapter = new MovieAdapter(getApplicationContext(),movies);
-
         if (savedInstanceState != null){
             mMoviesRecyclerViewState = savedInstanceState.getParcelable(STATE_KEY);
         }
-
-
     }
 
     @Override
@@ -155,8 +150,6 @@ public class MainActivity extends AppCompatActivity{
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
 
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -200,6 +193,7 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
+
     private void onSignedOutCleanUp(){
         mUserID = ANONYMOUS;
         if (movies!= null){
@@ -209,6 +203,8 @@ public class MainActivity extends AppCompatActivity{
 
 
     }
+
+
     private void generateMovies(String mUserID){
         Log.d(LIFE_CYCLE,"GENERATE ");
         movies = new ArrayList<>();
@@ -264,7 +260,7 @@ public class MainActivity extends AppCompatActivity{
             });
         }
 
-        Toast.makeText(this, R.string.sort_by_key + getSortValue(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.sort_by_pref_title + getSortValue(),Toast.LENGTH_LONG).show();
 
          recyclerView = findViewById(R.id.recyclerView);
         // Calling the Adapter object and setting it to the recycler view.
@@ -279,7 +275,7 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(mMoviesRecyclerViewState != null){
+        if(recyclerView != null){
             mMoviesRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
         }
         outState.putParcelable(STATE_KEY,mMoviesRecyclerViewState);
@@ -291,6 +287,9 @@ public class MainActivity extends AppCompatActivity{
             recyclerView.getLayoutManager().onRestoreInstanceState(mMoviesRecyclerViewState);
         }
     }
+
+
+
 
 }
 

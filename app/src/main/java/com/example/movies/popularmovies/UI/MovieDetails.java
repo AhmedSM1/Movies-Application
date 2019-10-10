@@ -28,6 +28,9 @@ public class MovieDetails extends AppCompatActivity   {
     public static final String MOVIE_STATE = "movieState";
     public ActionBar actionBar;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
