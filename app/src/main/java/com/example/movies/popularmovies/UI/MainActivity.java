@@ -1,6 +1,5 @@
 package com.example.movies.popularmovies.UI;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Parcelable;
@@ -37,17 +36,13 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity{
     private List<Movie> movies;
@@ -64,6 +59,14 @@ public class MainActivity extends AppCompatActivity{
     private Parcelable mMoviesRecyclerViewState;
     public static final String STATE_KEY="positionKey";
 
+
+
+
+    //widget
+    SharedPreferences shared;
+    List<String> titlesList;
+    public static String SHARED_PREFS = "widgetMovieTitles";
+    public static final String WIDGET_TITLE = "widgetTitle";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -188,6 +191,8 @@ public class MainActivity extends AppCompatActivity{
         }
 
         getSortValue();
+        mUserID = FirebaseAuth.getInstance().getUid();
+
         generateMovies(mUserID);
         actionBar.setTitle(getSortValue());
 
@@ -223,7 +228,6 @@ public class MainActivity extends AppCompatActivity{
                             Movie movie = data.getValue(Movie.class);
                             Log.d("DATASNAPPP", movie.title+"data  = " + data.child("title").getValue());
                             movies.add(movie);
-
                         }
                         adapter.notifyDataSetChanged();
 
@@ -260,7 +264,7 @@ public class MainActivity extends AppCompatActivity{
             });
         }
 
-        Toast.makeText(this, R.string.sort_by_pref_title + getSortValue(),Toast.LENGTH_LONG).show();
+        Toast.makeText(this, getString(R.string.sort_by_pref_title) +" "+ getSortValue(),Toast.LENGTH_LONG).show();
 
          recyclerView = findViewById(R.id.recyclerView);
         // Calling the Adapter object and setting it to the recycler view.
@@ -288,8 +292,17 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+ /* private void packagesSharedPref(String title){
+        shared = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
+        titlesList = new ArrayList<>();
+        SharedPreferences.Editor editor = shared.edit();
+        Set<String> set = new HashSet<String>();
 
-
-
+      set.add(title);
+      titlesList.addAll(set);
+      editor.putStringSet(WIDGET_TITLE,);
+      editor.apply();
+      Log.d(TAG, "packagesSharedPref: "+set);
+  }*/
 }
 

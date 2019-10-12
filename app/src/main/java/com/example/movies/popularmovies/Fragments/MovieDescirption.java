@@ -1,16 +1,12 @@
 package com.example.movies.popularmovies.Fragments;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.ContentValues;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
@@ -18,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,17 +21,16 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.movies.popularmovies.Database.DetailMovieViewModel;
 import com.example.movies.popularmovies.Database.DetailViewModelFactory;
-import com.example.movies.popularmovies.Database.MovieViewModel;
-import com.example.movies.popularmovies.Database.ViewModelFactory;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.R;
+import com.example.movies.popularmovies.Widget.MoviesListViews;
+import com.example.movies.popularmovies.Widget.WidgetDB.WidgetDBContract;
+import com.example.movies.popularmovies.Widget.WidgetService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 
 public class MovieDescirption extends Fragment {
@@ -48,26 +42,30 @@ public class MovieDescirption extends Fragment {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference movieRef;
     private FirebaseAuth mFirebaseAuth;
-    String userID;
+    private String userID;
     int key;
     private FloatingActionButton hart;
-    String movieReleaseDate;
-    String title;
-    Float cal;
-    String overview;
-    String moviePoster;
+    private String movieReleaseDate;
+    private String title;
+    private Float cal;
+    private String overview;
+    private String moviePoster;
+    private int movieID;
+    private double movieVote;
     //onSave instant state
-    public static final String IS_FAVORITE = "isFavorite";
-    public static final String TITLE = "title";
-    public static final String OVERVIEW = "overview";
-    public static final String CAL = "cal";
-    public static final String USER_ID = "userID";
-    public static final String RELEASE_DATE = "releaseDate";
-    public static final String KEY="key";
-    public static final String CURRENT_MOVIE_POSTER = "moviePoster";
+    private static final String IS_FAVORITE = "isFavorite";
+    private static final String TITLE = "title";
+    private static final String OVERVIEW = "overview";
+    private static final String CAL = "cal";
+    private static final String USER_ID = "userID";
+    private static final String RELEASE_DATE = "releaseDate";
+    private static final String KEY="key";
+    private static final String CURRENT_MOVIE_POSTER = "moviePoster";
+    private boolean isFavourite;
+    //widget
+    public static String WIDGET_TITLE = "widgetData";
+    public static final String SHARED_PREF = "SharedPreferences";
 
-
-    boolean isFavourite;
     public MovieDescirption() {
     }
 
@@ -121,11 +119,15 @@ public class MovieDescirption extends Fragment {
 
 
          title = mCurrentMovie.getTitle();
+         movieID = mCurrentMovie.getId();
+         movieVote = mCurrentMovie.getVoteAverage();
          overview = mCurrentMovie.getOverview();
          movieReleaseDate = mCurrentMovie.getReleaseDate();
          moviePoster = POSTER_PATH+mCurrentMovie.getPosterPath();
         Float rating = ((float) mCurrentMovie.getVoteAverage());
         cal = (5 * rating) / 10;
+
+
 
     }
 
@@ -215,12 +217,44 @@ public class MovieDescirption extends Fragment {
         movieRef.push().setValue(movie);
         Toast.makeText(getContext(), R.string.added_movie+movie.getTitle(),Toast.LENGTH_SHORT).show();
         Log.d(TAG,"key of the movie is"+key);
+        //add to shared prefs for widget
+        InsertToWidgetDB();
+
     }
+    public void InsertToWidgetDB(){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(WidgetDBContract.MovieEntry.MOVIE_ID_COLUMN,movieID);
+        contentValues.put(WidgetDBContract.MovieEntry.MOVIE_TITLE_COLUMN,title);
+        contentValues.put(WidgetDBContract.MovieEntry.MOVIE_VOTE_COLUMN,movieVote);
+        contentValues.put(WidgetDBContract.MovieEntry.TIME_STAMP_COLUMN,System.currentTimeMillis());
+        contentValues.put(WidgetDBContract.MovieEntry.POSTER_PATH,moviePoster);
+
+        Uri uri = getActivity().getApplicationContext().getContentResolver().insert(WidgetDBContract.MovieEntry.Content_URI,contentValues);
+        onInsertingCompleted(uri);
+    }
+    private void onInsertingCompleted(Uri uri) {
+        if (uri != null) {
+            Toast.makeText(getActivity().getApplicationContext(),R.string.add_to_widget, Toast.LENGTH_SHORT).show();
+            updateWidget();
+            
+
+
+        } else {
+            Toast.makeText(getActivity().getApplicationContext(), R.string.failed_to_add, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void updateWidget() {
+        WidgetService.StartActionUpdateWidget(getContext());
+    }
+
 
     private void deleteFavorite(){
 
         movieRef.removeValue();
         Log.d(TAG,"key of the movie is"+key);
+
+
     }
 
     @Override
@@ -237,12 +271,11 @@ public class MovieDescirption extends Fragment {
 
     }
 
-    private void addToWidget(){
 
-    }
-    private void deleteFromWidget(){
 
-    }
+
+
+
 
 
 }

@@ -56,13 +56,9 @@
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_to_widget">Add widget</string>
+    <string name="failed_to_add">Failed To add the movie</string>
     <string name="user_profile">My profile</string>
     <string name="title_activity_movie__details">Movie_Details</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_widget">Add widget</string>
+    <string name="not_available">Not Available</string>
 
 </resources>

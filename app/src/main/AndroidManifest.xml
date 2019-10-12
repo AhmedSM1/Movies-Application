@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.movies.popularmovies">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -20,11 +23,23 @@
                 android:resource="@xml/favorite_widget_info" />
         </receiver>
 
+
+        <service android:name=".Widget.WidgetService" />
+        <service android:name=".Widget.MoviesListViews"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            />
+
+        <provider
+            android:authorities="com.example.movies.popularmovies.Widget.WidgetDB"
+            android:name=".Widget.WidgetDB.DataProvider"
+            android:exported="true"
+            tools:ignore = "AllowBackup,GoogleAppIndexingWarning"/>
+
+
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8590994794759974~9400426262" />
-            <service android:name=".Widget.WidgetService"
-                android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
 
         <activity
             android:name=".UI.MovieDetails"
