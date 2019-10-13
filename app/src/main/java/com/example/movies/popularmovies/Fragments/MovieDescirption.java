@@ -228,7 +228,7 @@ public class MovieDescirption extends Fragment {
 
         movieRef.removeValue();
         Log.d(TAG,"key of the movie is"+key);
-
+        deleteFromWidgetDB(mCurrentMovie.getTitle());
 
     }
 
@@ -248,10 +248,8 @@ public class MovieDescirption extends Fragment {
 
 
     public void insertToWidgetDB(String title){
-        //widget db
-        WidgetDBHelper helper = new WidgetDBHelper(getActivity().getApplicationContext());
-        widgetDB = helper.getWritableDatabase();
 
+        openTheDB();
         ContentValues contentValues = new ContentValues();
         contentValues.put(WidgetDBContract.MovieEntry.MOVIE_TITLE_COLUMN, title);
         Log.d(TAG, "InsertToWidgetDB: "+contentValues.toString());
@@ -259,17 +257,32 @@ public class MovieDescirption extends Fragment {
         Uri uri = getActivity().getContentResolver().insert(WidgetDBContract.MovieEntry.Content_URI,contentValues);
         onInsertingCompleted(uri);
     }
+
+    public void deleteFromWidgetDB(String title){
+        openTheDB();
+        widgetDB.execSQL("DELETE FROM " + WidgetDBContract.MovieEntry.TABLE_NAME
+                         + " WHERE "+ WidgetDBContract.MovieEntry.MOVIE_TITLE_COLUMN +
+                         "='"+title+"'");
+       updateWidget();
+
+
+    }
+    public void openTheDB(){
+        //widget db
+        WidgetDBHelper helper = new WidgetDBHelper(getActivity().getApplicationContext());
+        widgetDB = helper.getWritableDatabase();
+    }
+
+
     private void onInsertingCompleted(Uri uri) {
         if (uri != null) {
             Log.d(TAG, "onInsertingCompleted: Completed");
             updateWidget();
-
-
-
         } else {
             Log.d(TAG, "onInsertingCompleted: Failed");
         }
     }
+
 
     private void updateWidget() {
         WidgetService.StartActionUpdateWidget(getActivity());
