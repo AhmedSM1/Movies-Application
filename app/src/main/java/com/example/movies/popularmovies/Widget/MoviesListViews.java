@@ -8,7 +8,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.movies.popularmovies.R;
-import com.example.movies.popularmovies.Widget.WidgetDB.WidgetDBContract;
+import com.example.movies.popularmovies.WidgetDB.WidgetDBContract;
 
 public class MoviesListViews extends RemoteViewsService {
     public static final String TAG = MoviesListViews.class.getName();
@@ -56,6 +56,7 @@ public class MoviesListViews extends RemoteViewsService {
         @Override
         public int getCount() {
             if (cursor != null){
+                Log.d(TAG, "getCount: "+cursor.getCount());
                 return cursor.getCount();
             }else {
                 return 0;
@@ -71,7 +72,7 @@ public class MoviesListViews extends RemoteViewsService {
             int titlePosition = cursor.getColumnIndex(WidgetDBContract.MovieEntry.MOVIE_TITLE_COLUMN);
 
             String movieTitle = cursor.getString(titlePosition);
-
+            Log.d(TAG, "getViewAt: Movie title "+movieTitle);
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_item);
 
             remoteViews.setTextViewText(R.id.widget_movie_title,movieTitle);

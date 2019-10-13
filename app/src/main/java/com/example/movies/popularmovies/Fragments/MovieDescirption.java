@@ -1,6 +1,7 @@
 package com.example.movies.popularmovies.Fragments;
 
 import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -23,9 +24,10 @@ import com.example.movies.popularmovies.Database.DetailMovieViewModel;
 import com.example.movies.popularmovies.Database.DetailViewModelFactory;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.R;
-import com.example.movies.popularmovies.Widget.MoviesListViews;
-import com.example.movies.popularmovies.Widget.WidgetDB.WidgetDBContract;
+import com.example.movies.popularmovies.UI.MainActivity;
 import com.example.movies.popularmovies.Widget.WidgetService;
+import com.example.movies.popularmovies.WidgetDB.WidgetDBContract;
+import com.example.movies.popularmovies.WidgetDB.WidgetDBHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -63,8 +65,7 @@ public class MovieDescirption extends Fragment {
     private static final String CURRENT_MOVIE_POSTER = "moviePoster";
     private boolean isFavourite;
     //widget
-    public static String WIDGET_TITLE = "widgetData";
-    public static final String SHARED_PREF = "SharedPreferences";
+    private SQLiteDatabase widgetDB;
 
     public MovieDescirption() {
     }
@@ -126,7 +127,6 @@ public class MovieDescirption extends Fragment {
          moviePoster = POSTER_PATH+mCurrentMovie.getPosterPath();
         Float rating = ((float) mCurrentMovie.getVoteAverage());
         cal = (5 * rating) / 10;
-
 
 
     }
@@ -217,35 +217,10 @@ public class MovieDescirption extends Fragment {
         movieRef.push().setValue(movie);
         Toast.makeText(getContext(), R.string.added_movie+movie.getTitle(),Toast.LENGTH_SHORT).show();
         Log.d(TAG,"key of the movie is"+key);
-        //add to shared prefs for widget
-        InsertToWidgetDB();
-
-    }
-    public void InsertToWidgetDB(){
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(WidgetDBContract.MovieEntry.MOVIE_ID_COLUMN,movieID);
-        contentValues.put(WidgetDBContract.MovieEntry.MOVIE_TITLE_COLUMN,title);
-        contentValues.put(WidgetDBContract.MovieEntry.MOVIE_VOTE_COLUMN,movieVote);
-        contentValues.put(WidgetDBContract.MovieEntry.TIME_STAMP_COLUMN,System.currentTimeMillis());
-        contentValues.put(WidgetDBContract.MovieEntry.POSTER_PATH,moviePoster);
-
-        Uri uri = getActivity().getApplicationContext().getContentResolver().insert(WidgetDBContract.MovieEntry.Content_URI,contentValues);
-        onInsertingCompleted(uri);
-    }
-    private void onInsertingCompleted(Uri uri) {
-        if (uri != null) {
-            Toast.makeText(getActivity().getApplicationContext(),R.string.add_to_widget, Toast.LENGTH_SHORT).show();
-            updateWidget();
-            
+        //insert to local db for widget
+        insertToWidgetDB(movie.getTitle());
 
 
-        } else {
-            Toast.makeText(getActivity().getApplicationContext(), R.string.failed_to_add, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void updateWidget() {
-        WidgetService.StartActionUpdateWidget(getContext());
     }
 
 
@@ -271,6 +246,34 @@ public class MovieDescirption extends Fragment {
 
     }
 
+
+    public void insertToWidgetDB(String title){
+        //widget db
+        WidgetDBHelper helper = new WidgetDBHelper(getActivity().getApplicationContext());
+        widgetDB = helper.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(WidgetDBContract.MovieEntry.MOVIE_TITLE_COLUMN, title);
+        Log.d(TAG, "InsertToWidgetDB: "+contentValues.toString());
+
+        Uri uri = getActivity().getContentResolver().insert(WidgetDBContract.MovieEntry.Content_URI,contentValues);
+        onInsertingCompleted(uri);
+    }
+    private void onInsertingCompleted(Uri uri) {
+        if (uri != null) {
+            Log.d(TAG, "onInsertingCompleted: Completed");
+            updateWidget();
+
+
+
+        } else {
+            Log.d(TAG, "onInsertingCompleted: Failed");
+        }
+    }
+
+    private void updateWidget() {
+        WidgetService.StartActionUpdateWidget(getActivity());
+    }
 
 
 

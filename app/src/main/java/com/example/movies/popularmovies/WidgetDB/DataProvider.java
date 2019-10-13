@@ -1,4 +1,4 @@
-package com.example.movies.popularmovies.Widget.WidgetDB;
+package com.example.movies.popularmovies.WidgetDB;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -45,7 +45,7 @@ public class DataProvider extends ContentProvider {
                         null,
                         null,
                         null,
-                        WidgetDBContract.MovieEntry.TIME_STAMP_COLUMN);
+                        null);
                 break;
                 default:
                     throw new UnsupportedOperationException(String.valueOf(R.string.not_available));

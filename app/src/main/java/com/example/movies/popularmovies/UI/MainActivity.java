@@ -1,7 +1,9 @@
 package com.example.movies.popularmovies.UI;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ import com.example.movies.popularmovies.Database.MovieViewModel;
 import com.example.movies.popularmovies.Database.ViewModelFactory;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.R;
+import com.example.movies.popularmovies.WidgetDB.WidgetDBContract;
+import com.example.movies.popularmovies.Widget.WidgetService;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -36,13 +40,10 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity{
     private List<Movie> movies;
@@ -292,17 +293,5 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
- /* private void packagesSharedPref(String title){
-        shared = getSharedPreferences(SHARED_PREFS,MODE_PRIVATE);
-        titlesList = new ArrayList<>();
-        SharedPreferences.Editor editor = shared.edit();
-        Set<String> set = new HashSet<String>();
-
-      set.add(title);
-      titlesList.addAll(set);
-      editor.putStringSet(WIDGET_TITLE,);
-      editor.apply();
-      Log.d(TAG, "packagesSharedPref: "+set);
-  }*/
 }
 

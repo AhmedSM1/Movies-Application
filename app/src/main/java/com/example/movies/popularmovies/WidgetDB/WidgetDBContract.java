@@ -1,4 +1,4 @@
-package com.example.movies.popularmovies.Widget.WidgetDB;
+package com.example.movies.popularmovies.WidgetDB;
 
 import android.net.Uri;
 import android.provider.BaseColumns;
@@ -6,8 +6,8 @@ import android.provider.BaseColumns;
 
 
 public class WidgetDBContract {
-    public static final String AUTHORITY = "com.example.movies.popularmovies.Widget.WidgetDB";
-    public static final String MOVIE_PATH = ".Widget.WidgetDB.DataProvider";
+    public static final String AUTHORITY = "com.example.movies.popularmovies.WidgetDB";
+    public static final String MOVIE_PATH = ".DataProvider";
 
 
     public static final Uri BASE_CONTENT = Uri.parse("content://"+AUTHORITY);
@@ -17,7 +17,8 @@ public class WidgetDBContract {
      }
 
      public static class MovieEntry implements BaseColumns{
-         public static final Uri Content_URI = BASE_CONTENT.buildUpon()
+         public static final Uri Content_URI =
+                 BASE_CONTENT.buildUpon()
                  .appendPath(MOVIE_PATH)
                  .build();
 

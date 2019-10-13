@@ -30,8 +30,8 @@
             />
 
         <provider
-            android:authorities="com.example.movies.popularmovies.Widget.WidgetDB"
-            android:name=".Widget.WidgetDB.DataProvider"
+            android:authorities="com.example.movies.popularmovies.WidgetDB"
+            android:name=".WidgetDB.DataProvider"
             android:exported="true"
             tools:ignore = "AllowBackup,GoogleAppIndexingWarning"/>
 
