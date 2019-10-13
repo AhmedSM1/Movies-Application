@@ -114,7 +114,10 @@ public class ReviewsFragment extends Fragment {
 
                             // GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getActivity().getApplicationContext(),1);
 
-                             manager = new LinearLayoutManager(getActivity().getApplicationContext());
+                             if (getActivity().getApplicationContext() != null){
+                                 manager = new LinearLayoutManager(getActivity().getApplicationContext());
+
+                             }
 
 
                              mRecyclerView.setLayoutManager(manager);
@@ -142,8 +145,12 @@ public class ReviewsFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        mReviewRecyclerViewState = mRecyclerView.getLayoutManager().onSaveInstanceState();
-        outState.putParcelable(STATE_KEY,mReviewRecyclerViewState);
+        if (mRecyclerView != null){
+            mReviewRecyclerViewState = mRecyclerView.getLayoutManager().onSaveInstanceState();
+            outState.putParcelable(STATE_KEY,mReviewRecyclerViewState);
+        }
+
+
     }
 
 

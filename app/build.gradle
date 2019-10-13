@@ -33,8 +33,6 @@ dependencies {
 
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'jp.wasabeef:picasso-transformations:2.1.0'
-    // If you want to use the GPU Filters
-    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 
 
     implementation 'com.firebaseui:firebase-ui-database:5.1.0'
@@ -45,7 +43,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.vectordrawable:vectordrawable:1.0.1'
+    implementation 'com.google.firebase:firebase-messaging:20.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.firebase:firebase-database:19.0.0'
     // Java
@@ -59,9 +57,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.0.0'
     implementation 'com.google.firebase:firebase-functions:19.0.1'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
-    //dependencies
-    implementation 'com.flaviofaria:kenburnsview:1.0.7'
 
+
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.6'
     implementation 'com.google.android.gms:play-services-ads:18.2.0'
 
 

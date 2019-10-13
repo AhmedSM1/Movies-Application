@@ -1,9 +1,10 @@
 package com.example.movies.popularmovies.UI;
 
-import android.content.ContentValues;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
@@ -28,8 +29,13 @@ import com.example.movies.popularmovies.Database.MovieViewModel;
 import com.example.movies.popularmovies.Database.ViewModelFactory;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.R;
-import com.example.movies.popularmovies.WidgetDB.WidgetDBContract;
-import com.example.movies.popularmovies.Widget.WidgetService;
+import com.example.movies.popularmovies.Utils.MyJobDispatcher;
+import com.firebase.jobdispatcher.Constraint;
+import com.firebase.jobdispatcher.FirebaseJobDispatcher;
+import com.firebase.jobdispatcher.GooglePlayDriver;
+import com.firebase.jobdispatcher.Job;
+import com.firebase.jobdispatcher.Lifetime;
+import com.firebase.jobdispatcher.Trigger;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -44,6 +50,7 @@ import com.google.firebase.database.DataSnapshot;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity{
     private List<Movie> movies;
@@ -60,14 +67,13 @@ public class MainActivity extends AppCompatActivity{
     private Parcelable mMoviesRecyclerViewState;
     public static final String STATE_KEY="positionKey";
 
+    // job dispatcher
+    private static boolean sIsJobDispatcherInitialized;
+    public static final String JOB_TAG = "jobTag";
+    int INTERVAL_MINUTES = 1;
+    int INTERVAL_SECONDS = (int) (TimeUnit.MINUTES.toSeconds(INTERVAL_MINUTES)) ;
+    int SYNC_FLEXTIME_SECONDS = INTERVAL_SECONDS;
 
-
-
-    //widget
-    SharedPreferences shared;
-    List<String> titlesList;
-    public static String SHARED_PREFS = "widgetMovieTitles";
-    public static final String WIDGET_TITLE = "widgetTitle";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +132,12 @@ public class MainActivity extends AppCompatActivity{
         if (savedInstanceState != null){
             mMoviesRecyclerViewState = savedInstanceState.getParcelable(STATE_KEY);
         }
+
+
+        notificationsJobScheduller(this);
+
+
+
     }
 
     @Override
@@ -282,8 +294,9 @@ public class MainActivity extends AppCompatActivity{
         super.onSaveInstanceState(outState);
         if(recyclerView != null){
             mMoviesRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+            outState.putParcelable(STATE_KEY,mMoviesRecyclerViewState);
         }
-        outState.putParcelable(STATE_KEY,mMoviesRecyclerViewState);
+
     }
 
 
@@ -293,5 +306,24 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+   private void notificationsJobScheduller(Context context){
+
+       GooglePlayDriver driver = new GooglePlayDriver(context);
+       FirebaseJobDispatcher firebaseJobDispatcher = new FirebaseJobDispatcher(driver);
+       Job job = firebaseJobDispatcher.newJobBuilder()
+               .setService(MyJobDispatcher.class)
+               .setTag(JOB_TAG)
+               .setLifetime(Lifetime.FOREVER)
+               .setRecurring(true)
+               .setTrigger(
+                       Trigger.executionWindow(
+                               INTERVAL_SECONDS,
+                               INTERVAL_SECONDS + SYNC_FLEXTIME_SECONDS
+                       )
+               )
+               .setReplaceCurrent(true)
+               .build();
+       firebaseJobDispatcher.schedule(job);
+   }
 }
 

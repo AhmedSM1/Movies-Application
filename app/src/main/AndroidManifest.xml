@@ -59,10 +59,15 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".Utils.MyJobDispatcher"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+
+            </intent-filter>
 
 
-
-
+        </service>
     </application>
 
 </manifest>

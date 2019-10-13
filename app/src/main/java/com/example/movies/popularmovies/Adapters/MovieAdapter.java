@@ -23,9 +23,8 @@ import java.util.List;
       Context context;
       List<Movie> moviesArray;
       public static final String MOVIE_KEY = "movie";
-      public static final String UID_KEY = "name ";
       public static final String POSTER_PATH = "https://image.tmdb.org/t/p/w500";
-      String userID;
+
 
 
       public MovieAdapter( Context context,List<Movie> moviesArray) {
