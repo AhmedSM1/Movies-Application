@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity{
     public static final String STATE_KEY="positionKey";
 
     // job dispatcher
-    private static boolean sIsJobDispatcherInitialized;
     public static final String JOB_TAG = "jobTag";
+    //notification
     int INTERVAL_MINUTES = 1;
     int INTERVAL_SECONDS = (int) (TimeUnit.MINUTES.toSeconds(INTERVAL_MINUTES)) ;
     int SYNC_FLEXTIME_SECONDS = INTERVAL_SECONDS;
