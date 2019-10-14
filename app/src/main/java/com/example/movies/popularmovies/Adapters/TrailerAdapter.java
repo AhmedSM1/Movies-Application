@@ -29,7 +29,9 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
     Context context;
     private List<Trailer> trailerList;
     public static final String TAG = TrailerAdapter.class.getName();
-
+    public static final String YOUTUBE_IMG_PATH = "https://img.youtube.com/vi/";
+    public static final String EXTENSION = "/0.jpg";
+    public static final String YOUTUBE_PATH = "https://www.youtube.com/watch?v=";
      public TrailerAdapter( List<Trailer> trailerList,Context context) {
         this.trailerList = trailerList;
         this.context = context;
@@ -41,7 +43,6 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.trailer_item,viewGroup,false);
         return new MyViewHolder(view);
     }
-    //"https://www.youtube.com/watch?v="
     @Override
     public void onBindViewHolder(@NonNull TrailerAdapter.MyViewHolder myViewHolder, final int i) {
          Trailer trailer = trailerList.get(i);
@@ -49,7 +50,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
 
 
         Picasso.get()
-                .load("https://img.youtube.com/vi/" + key + "/0.jpg")
+                .load( YOUTUBE_IMG_PATH + key + EXTENSION )
                 .into(myViewHolder.trailerImg, new Callback() {
                             @Override
                             public void onSuccess() {
@@ -63,14 +64,11 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.MyViewHo
                         });
 
 
-                        Log.d(TAG, "Key : " + trailer.getKey() + "name:" + trailer.getName());
-        Log.d(TAG,"http://img.youtube.com/vi/"+ key + "/0.jpg");
-
         myViewHolder.trailerImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v="+key));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(YOUTUBE_PATH+key));
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }

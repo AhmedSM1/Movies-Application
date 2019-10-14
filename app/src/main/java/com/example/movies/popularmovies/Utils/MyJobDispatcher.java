@@ -18,7 +18,7 @@ public class MyJobDispatcher extends JobService {
             public void run() {
                 //notifications
                 Log.d(TAG, "startJob");
-                NotificationsReciever.myNotification(getApplicationContext(),getString(R.string.notification_title),getString(R.string.notification_body));
+                NotificationSender.myNotification(getApplicationContext(),getString(R.string.notification_title),getString(R.string.notification_body));
             }
         });
         return true;
@@ -28,7 +28,7 @@ public class MyJobDispatcher extends JobService {
     @Override
     public boolean onStopJob(@NonNull JobParameters job) {
         Log.d(TAG, "onStopJob: ");
-        NotificationsReciever.clearNotifications(getApplicationContext());
+        NotificationSender.clearNotifications(getApplicationContext());
         return false;
     }
 }

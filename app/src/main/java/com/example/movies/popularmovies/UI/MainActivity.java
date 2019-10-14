@@ -1,11 +1,10 @@
 package com.example.movies.popularmovies.UI;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Parcelable;
+import android.os.PersistableBundle;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +29,6 @@ import com.example.movies.popularmovies.Database.ViewModelFactory;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.R;
 import com.example.movies.popularmovies.Utils.MyJobDispatcher;
-import com.firebase.jobdispatcher.Constraint;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
@@ -54,7 +52,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity{
     private List<Movie> movies;
-    private MovieAdapter adapter;
+
     public static final String TAG = MainActivity.class.getName();
     public static final String LIFE_CYCLE = "LIFE CYCLE";
     private FirebaseAuth mFirebaseAuth;
@@ -63,9 +61,12 @@ public class MainActivity extends AppCompatActivity{
     public static final String ANONYMOUS = "anonymous";
     public ActionBar actionBar;
     private String mUserID;
-    RecyclerView recyclerView;
+
+    private MovieAdapter adapter;
+    private RecyclerView recyclerView;
     private Parcelable mMoviesRecyclerViewState;
-    public static final String STATE_KEY="positionKey";
+    public static final String STATE_KEY="state_key";
+
 
     // job dispatcher
     public static final String JOB_TAG = "jobTag";
@@ -129,16 +130,12 @@ public class MainActivity extends AppCompatActivity{
         };
         //when the device is rotated the adapter will be null so we have to init in onCreate
         adapter = new MovieAdapter(getApplicationContext(),movies);
-        if (savedInstanceState != null){
-            mMoviesRecyclerViewState = savedInstanceState.getParcelable(STATE_KEY);
-        }
 
-
-        notificationsJobScheduller(this);
-
+        notificationsJobScheduler(this);
 
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -157,7 +154,7 @@ public class MainActivity extends AppCompatActivity{
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
 
-
+        restoreRecyclerViewState();
     }
 
     @Override
@@ -191,7 +188,6 @@ public class MainActivity extends AppCompatActivity{
 
     private String getSortValue() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.d("MainActivity","the preference is "+sharedPreferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_popularity)));
         return sharedPreferences.getString(getString(R.string.sort_by_key), getString(R.string.sort_popularity));
     }
 
@@ -232,14 +228,14 @@ public class MainActivity extends AppCompatActivity{
             if (!viewModel.getLiveData().hasActiveObservers()) viewModel.getLiveData().observe(this, new Observer<DataSnapshot>() {
                 @Override
                 public void onChanged(DataSnapshot dataSnapshot) {
-                    Log.d("DATASNAPPP",dataSnapshot.toString());
+                    Log.d(TAG,dataSnapshot.toString());
                     movies.clear();
                     for (DataSnapshot itemSnapShot : dataSnapshot.getChildren()) {
                         //Movie movie = itemSnapShot.getValue(Movie.class);
-                        Log.d("DATASNAPPP", "itemSnapShot = " + itemSnapShot.getValue());
+                        Log.d(TAG, "itemSnapShot = " + itemSnapShot.getValue());
                         for (DataSnapshot data :itemSnapShot.getChildren()) {
                             Movie movie = data.getValue(Movie.class);
-                            Log.d("DATASNAPPP", movie.title+"data  = " + data.child("title").getValue());
+                            Log.d(TAG, movie.title+"data  = " + data.child("title").getValue());
                             movies.add(movie);
                         }
                         adapter.notifyDataSetChanged();
@@ -286,28 +282,26 @@ public class MainActivity extends AppCompatActivity{
         recyclerView.setAdapter(adapter);
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
-         restoreRecyclerViewState();
+
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(recyclerView != null){
-            mMoviesRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
-            outState.putParcelable(STATE_KEY,mMoviesRecyclerViewState);
-        }
+      //  mMoviesRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+      //  outState.putParcelable(STATE_KEY,mMoviesRecyclerViewState);
 
     }
 
 
     private void restoreRecyclerViewState(){
-        if (mMoviesRecyclerViewState != null){
+        if ( mMoviesRecyclerViewState != null){
             recyclerView.getLayoutManager().onRestoreInstanceState(mMoviesRecyclerViewState);
         }
     }
 
-   private void notificationsJobScheduller(Context context){
-
+   private void notificationsJobScheduler(Context context){
+       //Schedule a job to send a notification
        GooglePlayDriver driver = new GooglePlayDriver(context);
        FirebaseJobDispatcher firebaseJobDispatcher = new FirebaseJobDispatcher(driver);
        Job job = firebaseJobDispatcher.newJobBuilder()

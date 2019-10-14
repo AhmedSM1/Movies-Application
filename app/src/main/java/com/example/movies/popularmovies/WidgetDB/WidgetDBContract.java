@@ -17,17 +17,14 @@ public class WidgetDBContract {
      }
 
      public static class MovieEntry implements BaseColumns{
+         public static final String TABLE_NAME = "Movie";
+         public static final String MOVIE_TITLE_COLUMN = "_movieTitle";
+         public static final String TIME_STAMP_COLUMN = "_time";
+
          public static final Uri Content_URI =
                  BASE_CONTENT.buildUpon()
                  .appendPath(MOVIE_PATH)
                  .build();
-
-         public static final String TABLE_NAME = "Movie";
-         public static final String MOVIE_ID_COLUMN = "_movieID";
-         public static final String MOVIE_TITLE_COLUMN = "_movieTitle";
-         public static final String MOVIE_VOTE_COLUMN = "_movieVote";
-         public static final String TIME_STAMP_COLUMN = "_time";
-         public static final String POSTER_PATH = "_posterPath";
 
 
 

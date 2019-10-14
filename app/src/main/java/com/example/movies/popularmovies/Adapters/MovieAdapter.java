@@ -49,15 +49,8 @@ import java.util.List;
       @Override
       public void onBindViewHolder(@NonNull MovieViewHolder holder, int i) {
           final  Movie movie = moviesArray.get(i);
-        //  Picasso.with(context).load("https://image.tmdb.org/t/p/w500"+movie.getPosterPath()).into(holder.itemImage);
 
           Glide.with(context).load(POSTER_PATH+movie.getPosterPath()).into(holder.itemImage);
-          Log.i("msg", "link is " + movie.getPosterPath());
-          if (moviesArray != null){
-              Log.d("amazing ","MovieAdapter list doesnt = null");
-          }else{
-              Log.d("Error","the adapter list is null");
-          }
       }
 
 
@@ -79,9 +72,6 @@ import java.util.List;
                       Intent intent = new Intent(context, MovieDetails.class);
                       Movie clickedMovie = moviesArray.get(getAdapterPosition());
                       intent.putExtra(MOVIE_KEY,  clickedMovie);
-
-
-
                       context.startActivity(intent);
                   }
               });

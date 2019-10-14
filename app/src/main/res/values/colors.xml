@@ -5,6 +5,4 @@
     <color name="colorAccent">#FFFF33</color>
     <color name="darkColor">#000000</color>
     <color name="lightColor">#FFFAFA</color>
-    <color name="navigationBarColor">#9c9c9c</color>
-    <color name="drawerArrowColor">#453951</color>
 </resources>

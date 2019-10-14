@@ -52,8 +52,7 @@ public class MovieDescirption extends Fragment {
     private Float cal;
     private String overview;
     private String moviePoster;
-    private int movieID;
-    private double movieVote;
+
     //onSave instant state
     private static final String IS_FAVORITE = "isFavorite";
     private static final String TITLE = "title";
@@ -97,9 +96,6 @@ public class MovieDescirption extends Fragment {
             @Override
             public void onChanged(DataSnapshot dataSnapshot) {
 
-                Log.d(TAG, "datasnapshot "+dataSnapshot.toString());
-                Log.d(TAG, "onDataChange: key == "+key);
-                Log.d(TAG, "onDataChange: movie ref == "+movieRef.toString());
                 if (dataSnapshot.exists()){
 
                     Log.d(TAG,"Movie ====> exists");
@@ -120,8 +116,7 @@ public class MovieDescirption extends Fragment {
 
 
          title = mCurrentMovie.getTitle();
-         movieID = mCurrentMovie.getId();
-         movieVote = mCurrentMovie.getVoteAverage();
+
          overview = mCurrentMovie.getOverview();
          movieReleaseDate = mCurrentMovie.getReleaseDate();
          moviePoster = POSTER_PATH+mCurrentMovie.getPosterPath();

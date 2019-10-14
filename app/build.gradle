@@ -4,19 +4,21 @@ apply plugin: 'com.google.gms.google-services'
 android {
     signingConfigs {
         release {
-            storeFile file('C:\\Users\\ahmed\\Desktop\\Movies-Authentication\\Movies-Authentication\\ahmed.jks')
+            //storeFile file('/ahmed.jks')
+           // storeFile file('C:\\Users\\ahmed\\Desktop\\Movies-Authentication\\Movies-Authentication\\ahmed.jks')
+            storeFile file('\\keystores\\ahmedsm.jks')
             keyAlias = 'ahmedsm'
             keyPassword '123456aa'
             storePassword '123456aa'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 29
 
 
     defaultConfig {
         applicationId "com.example.movies.popularmovies"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -30,6 +32,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            debuggable = true
 
         }
         buildTypes.each {
