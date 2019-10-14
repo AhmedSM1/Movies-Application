@@ -11,6 +11,7 @@ import com.example.movies.popularmovies.Fragments.MovieDescirption;
 import com.example.movies.popularmovies.Fragments.ReviewsFragment;
 import com.example.movies.popularmovies.Fragments.TrailerFragment;
 import com.example.movies.popularmovies.Model.Movie;
+import com.example.movies.popularmovies.R;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -54,11 +55,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
          switch (position){
              case 0:
-                 return "Movie Details";
+                 return mContext.getString(R.string.tab_movie);
              case 1:
-                 return "Reviews";
+                 return mContext.getString(R.string.tab_review);
              case 2:
-                 return "Trailers";
+                 return mContext.getString(R.string.tab_trailer);
 
          }
          return null;

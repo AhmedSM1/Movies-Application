@@ -1,6 +1,7 @@
 
 package com.example.movies.popularmovies.Database;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import com.example.movies.popularmovies.API.Services;
 import com.example.movies.popularmovies.BuildConfig;
 import com.example.movies.popularmovies.Model.Movie;
 import com.example.movies.popularmovies.Model.MoviesReply;
+import com.example.movies.popularmovies.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -25,13 +27,15 @@ public class MovieViewModel extends ViewModel {
     MutableLiveData<List <Movie>> movieLiveData = new MutableLiveData<>();
     public static final String TAG = MovieViewModel.class.getName();
 
+    Context mContext;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference movieRef;
     private  FirebaseQueryLiveData liveData;
 
-    public MovieViewModel( String userID) {
+    public MovieViewModel( Context context,String userID) {
        this.movieRef = database.getReference().child(userID);
        this.liveData = new FirebaseQueryLiveData(movieRef);
+       this.mContext = context;
     }
 
     public LiveData<List<Movie>> getMovies(String sort) {
@@ -40,11 +44,11 @@ public class MovieViewModel extends ViewModel {
             //assign a call instence so we can use it to get popular movie or top rated
 
             Call<MoviesReply> moviesCall;
-            if (sort.equals("Most Popular")) {
+            if (sort.equals(mContext.getString(R.string.sort_popularity))) {
                 Log.d("Calling", "Most Popular method is getting called");
                 moviesCall = services.getPopularMovies(BuildConfig.API_KEY);
 
-            } else if (sort.equals("Top rated")) {
+            } else if (sort.equals(mContext.getString(R.string.sort_top_rated))) {
                 moviesCall = services.getTopRatedMovies(BuildConfig.API_KEY);
             } else moviesCall = null;
 

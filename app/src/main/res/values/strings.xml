@@ -25,9 +25,11 @@
     <string name="overview">Overview:</string>
     <string name="rating"> Ratings</string>
     <string name="movie_id">Movie ID</string>
+
     <string name="sort_by_favorites">Favorites</string>
     <string name="sort_popularity">Most Popular</string>
     <string name="sort_top_rated">Top rated</string>
+
     <string name="setting">Settings</string>
     <string name="sort_by_pref_title">Sort By</string>
     <string name="sort_by_key">sort_by_key</string>
@@ -63,4 +65,7 @@
     <string name="notification_title">Hello</string>
     <string name="notification_body">Check out the latest movies</string>
 
+    <string name="tab_movie">Movie Details</string>
+    <string name="tab_review">Reviews</string>
+    <string name="tab_trailer">Trailers</string>
 </resources>

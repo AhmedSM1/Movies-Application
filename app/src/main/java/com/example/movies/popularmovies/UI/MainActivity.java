@@ -64,8 +64,11 @@ public class MainActivity extends AppCompatActivity{
 
     private MovieAdapter adapter;
     private RecyclerView recyclerView;
-    private Parcelable mMoviesRecyclerViewState;
-    public static final String STATE_KEY="state_key";
+    private GridLayoutManager layoutManager;
+    private final String RECYCLER_POSITION_KEY = "recycler_position";
+    private int mPosition = RecyclerView.NO_POSITION;
+    private static Bundle mBundleState;
+
 
 
     // job dispatcher
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity{
             actionBar.getDisplayOptions();
             actionBar.setTitle(getSortValue());
         }
+
 
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -122,7 +126,6 @@ public class MainActivity extends AppCompatActivity{
                                     .createSignInIntentBuilder()
                                     .setIsSmartLockEnabled(false)
                                     .setAvailableProviders(Arrays.asList(
-                                          new AuthUI.IdpConfig.GoogleBuilder().build(),
                                           new AuthUI.IdpConfig.EmailBuilder().build()))
                                     .build(), RC_SIGN_IN);
                 }
@@ -130,6 +133,8 @@ public class MainActivity extends AppCompatActivity{
         };
         //when the device is rotated the adapter will be null so we have to init in onCreate
         adapter = new MovieAdapter(getApplicationContext(),movies);
+        recyclerView = findViewById(R.id.recyclerView);
+
 
         notificationsJobScheduler(this);
 
@@ -154,13 +159,52 @@ public class MainActivity extends AppCompatActivity{
         super.onResume();
         mFirebaseAuth.addAuthStateListener(mAuthStateListener);
 
-        restoreRecyclerViewState();
+        // Restore RecyclerView state
+        if (mBundleState != null) {
+            mPosition = mBundleState.getInt(RECYCLER_POSITION_KEY);
+            if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
+            // Scroll the RecyclerView to mPosition
+            recyclerView.smoothScrollToPosition(mPosition);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+
+
+        // Save RecyclerView state
+        mBundleState = new Bundle();
+        if (layoutManager != null){
+
+            mPosition = layoutManager.findFirstCompletelyVisibleItemPosition();
+            mBundleState.putInt(RECYCLER_POSITION_KEY, mPosition);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+       if (recyclerView != null && layoutManager != null){
+           outState.putInt(RECYCLER_POSITION_KEY,layoutManager.findFirstCompletelyVisibleItemPosition());
+
+       }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        // Restore RecyclerView state
+        if (savedInstanceState.containsKey(RECYCLER_POSITION_KEY)) {
+            mPosition = savedInstanceState.getInt(RECYCLER_POSITION_KEY);
+            if (mPosition == RecyclerView.NO_POSITION) mPosition = 0;
+            // Scroll the RecyclerView to mPosition
+
+            recyclerView.smoothScrollToPosition(mPosition);
+        }
+
+
+        super.onRestoreInstanceState(savedInstanceState);
 
     }
 
@@ -222,7 +266,7 @@ public class MainActivity extends AppCompatActivity{
     private void generateMovies(String mUserID){
         Log.d(LIFE_CYCLE,"GENERATE ");
         movies = new ArrayList<>();
-        final ViewModelFactory modelFactory = new ViewModelFactory(mUserID);
+        final ViewModelFactory modelFactory = new ViewModelFactory(mUserID,this);
         MovieViewModel viewModel = ViewModelProviders.of(this,modelFactory).get(MovieViewModel.class);
         if (getSortValue().equals(getString(R.string.sort_by_favorites))) {
             if (!viewModel.getLiveData().hasActiveObservers()) viewModel.getLiveData().observe(this, new Observer<DataSnapshot>() {
@@ -273,34 +317,21 @@ public class MainActivity extends AppCompatActivity{
             });
         }
 
-        Toast.makeText(this, getString(R.string.sort_by_pref_title) +" "+ getSortValue(),Toast.LENGTH_LONG).show();
 
          recyclerView = findViewById(R.id.recyclerView);
         // Calling the Adapter object and setting it to the recycler view.
         adapter = new MovieAdapter(this, movies);
 
         recyclerView.setAdapter(adapter);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+         layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
-
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-      //  mMoviesRecyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
-      //  outState.putParcelable(STATE_KEY,mMoviesRecyclerViewState);
+        adapter.notifyDataSetChanged();
 
     }
 
 
-    private void restoreRecyclerViewState(){
-        if ( mMoviesRecyclerViewState != null){
-            recyclerView.getLayoutManager().onRestoreInstanceState(mMoviesRecyclerViewState);
-        }
-    }
 
-   private void notificationsJobScheduler(Context context){
+    private void notificationsJobScheduler(Context context){
        //Schedule a job to send a notification
        GooglePlayDriver driver = new GooglePlayDriver(context);
        FirebaseJobDispatcher firebaseJobDispatcher = new FirebaseJobDispatcher(driver);
