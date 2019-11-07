@@ -1,11 +1,11 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.firebase:firebase-messaging:20.0.0@aar">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/8f465b1e1d1995090ab1295f790e39bb/jetified-firebase-messaging-20.0.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/8f465b1e1d1995090ab1295f790e39bb/jetified-firebase-messaging-20.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/55a8d2dc3fd380406878b25d8870240e/jetified-firebase-messaging-20.0.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/55a8d2dc3fd380406878b25d8870240e/jetified-firebase-messaging-20.0.0/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.google.firebase/firebase-messaging/20.0.0/a161c8f8e68ac9af8b7e28f456b1373a7712ff25/firebase-messaging-20.0.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.google.firebase/firebase-messaging/20.0.0/a161c8f8e68ac9af8b7e28f456b1373a7712ff25/firebase-messaging-20.0.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>

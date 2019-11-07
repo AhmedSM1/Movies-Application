@@ -1,17 +1,17 @@
 <component name="libraryTable">
   <library name="Gradle: com.firebase:firebase-jobdispatcher:0.8.6@aar">
     <ANNOTATIONS>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/9c967f2b5b99afb279ad93f0336910c3/jetified-firebase-jobdispatcher-0.8.6/annotations.zip!/" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/9b8515e665233da88314bb6d73142075/jetified-firebase-jobdispatcher-0.8.6/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/9c967f2b5b99afb279ad93f0336910c3/jetified-firebase-jobdispatcher-0.8.6/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/9c967f2b5b99afb279ad93f0336910c3/jetified-firebase-jobdispatcher-0.8.6/res" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/9b8515e665233da88314bb6d73142075/jetified-firebase-jobdispatcher-0.8.6/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/9b8515e665233da88314bb6d73142075/jetified-firebase-jobdispatcher-0.8.6/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.firebase/firebase-jobdispatcher/0.8.6/a795c7dc5dfebcba479d1cf080828861c7ae16c5/firebase-jobdispatcher-0.8.6-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.firebase/firebase-jobdispatcher/0.8.6/a795c7dc5dfebcba479d1cf080828861c7ae16c5/firebase-jobdispatcher-0.8.6-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.firebase/firebase-jobdispatcher/0.8.6/74a9f39ac400680019db9a3c00083d20b064b936/firebase-jobdispatcher-0.8.6-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.firebase/firebase-jobdispatcher/0.8.6/74a9f39ac400680019db9a3c00083d20b064b936/firebase-jobdispatcher-0.8.6-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

@@ -1,17 +1,17 @@
 <component name="libraryTable">
   <library name="Gradle: com.firebaseui:firebase-ui-auth:5.0.0@aar">
     <ANNOTATIONS>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/5a6a25b0d9377860c6b3872cad483314/jetified-firebase-ui-auth-5.0.0/annotations.zip!/" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/497bbc81e2563756c75c52731d6f16d6/jetified-firebase-ui-auth-5.0.0/annotations.zip!/" />
     </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/5a6a25b0d9377860c6b3872cad483314/jetified-firebase-ui-auth-5.0.0/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/5a6a25b0d9377860c6b3872cad483314/jetified-firebase-ui-auth-5.0.0/res" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/497bbc81e2563756c75c52731d6f16d6/jetified-firebase-ui-auth-5.0.0/jars/classes.jar!/" />
+      <root url="file://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/transforms-2/files-2.1/497bbc81e2563756c75c52731d6f16d6/jetified-firebase-ui-auth-5.0.0/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.firebaseui/firebase-ui-auth/5.0.0/3695fcf7eb94e21e1583a1874cee1b04a065b7e9/firebase-ui-auth-5.0.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.firebaseui/firebase-ui-auth/5.0.0/3695fcf7eb94e21e1583a1874cee1b04a065b7e9/firebase-ui-auth-5.0.0-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.firebaseui/firebase-ui-auth/5.0.0/956ce618916a6d243224b70e5f0c914130dc35b9/firebase-ui-auth-5.0.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../gradle-4.4-all/gradle-4.4/caches/modules-2/files-2.1/com.firebaseui/firebase-ui-auth/5.0.0/956ce618916a6d243224b70e5f0c914130dc35b9/firebase-ui-auth-5.0.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
