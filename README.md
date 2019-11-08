@@ -20,10 +20,7 @@
     <span>
 <img src="Screenshots/Widget.png" width="200">
   </span>
-      <span>
-<img src="Screenshots/Widget.png" width="200">
-  </span>
-  
+ 
  <span>
 <img src="Screenshots/Google Pixel 3 1.png" width="200">
   </span>
